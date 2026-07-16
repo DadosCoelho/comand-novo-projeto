@@ -16,6 +16,7 @@ Minimal Claude Code template with a task-driven workflow:
 | `/claude:design [create\|lint\|check\|export\|spec]` | Manages `/DESIGN.md` (Google Labs alpha spec). `create` invokes the curator to compose the file; `check` audits components against the tokens. |
 | `/claude:learning [description]` | Records a lesson learned in `ai-docs/lessons.md` (date, context, root cause, how to avoid, tags). Use after any avoidable mistake. |
 | `/claude:manual-verify [request]` | Runs a free-form verification you describe — browser checks via Playwright MCP, CLI checks, etc. — and reports anything that needs human action. |
+| `/claude:pesquisa [topic]` | Researches a topic and records a structured note in `pesquisa/<slug>.md` (creates the folder + index on first run). |
 
 > **Convenção de comandos:** todos os comandos do usuário usam o namespace
 > `claude:` — ficam em `.claude/commands/claude/<nome>.md` e são chamados como
@@ -52,7 +53,8 @@ ai-docs/
 │       ├── dev.md                   # /claude:dev
 │       ├── design.md                # /claude:design
 │       ├── learning.md              # /claude:learning
-│       └── manual-verify.md         # /claude:manual-verify
+│       ├── manual-verify.md         # /claude:manual-verify
+│       └── pesquisa.md              # /claude:pesquisa
 ├── skills/
 │   └── skill-creator/               # the one bundled skill (meta — author more skills)
 └── settings.json                    # agent-teams env (add hooks here if you want any)

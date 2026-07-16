@@ -11,6 +11,7 @@ project, use the **`harness-full`** template instead.)
 |---|---|
 | `/claude:learning [description]` | Records a lesson in `ai-docs/lessons.md` (date, context, root cause, how to avoid, tags). Use after any avoidable mistake. |
 | `/claude:manual-verify [request]` | Runs a free-form verification you describe — browser checks, CLI checks, etc. — and reports anything that needs human action. |
+| `/claude:pesquisa [topic]` | Researches a topic and records a structured note in `pesquisa/<slug>.md` (creates the folder + index on first run). |
 
 > **Convenção de comandos:** todos os comandos do usuário usam o namespace
 > `claude:` — ficam em `.claude/commands/claude/<nome>.md` e são chamados como

@@ -96,18 +96,52 @@ seu próprio repositório limpo).
    - Se **não**, não crie o arquivo; não pergunte de novo depois, o
      usuário pode pedir manualmente mais tarde se mudar de ideia.
 
-5. **Relatar.** Mostre ao usuário:
+5. **Perguntar sobre registro automático de pesquisas.** Use
+   `AskUserQuestion` para perguntar se o usuário quer habilitar, neste
+   projeto, o registro automático de pesquisas: sempre que eu concluir uma
+   investigação não trivial (múltiplas buscas/leituras sobre um tema), salvo
+   uma nota estruturada em `pesquisa/<slug>.md` e atualizo um índice — sem
+   que o usuário precise pedir. Isso é feito pela skill global
+   `pesquisa-workflow`; o comando `/claude:pesquisa` (já copiado do
+   template, disponível em ambos) já entra junto e serve tanto para pesquisa
+   explícita quanto para habilitar isso depois manualmente.
+
+   - Pergunta: "Quer habilitar registro automático de pesquisas
+     (`pesquisa/`) neste projeto?" com opções "Sim, habilitar" / "Não,
+     obrigado".
+   - Se **sim**, crie `$dest\pesquisa\README.md` com um índice vazio:
+
+     ```markdown
+     # Pesquisas
+
+     | Data | Tema | Tags |
+     |---|---|---|
+     ```
+
+     A pasta `pesquisa/` é **versionada** (não é preferência local como o
+     hook de commit) — faz parte do conteúdo do projeto.
+   - Se **não**, não crie a pasta agora. O comando `/claude:pesquisa`
+     continua disponível e, se usado manualmente depois, cria a pasta e
+     ativa o registro automático a partir daí (não precisa perguntar de
+     novo).
+
+6. **Relatar.** Mostre ao usuário:
    - O caminho do projeto criado.
    - Confirmação de que é um repo git novo (sem o histórico do template).
    - **Próximos passos por template:**
      - **lite:** preencher os `{{placeholders}}` em `CLAUDE.md`
        ("Project-specific notes"). Comandos disponíveis: `/claude:learning`,
-       `/claude:manual-verify`.
+       `/claude:manual-verify`, `/claude:pesquisa`.
      - **full:** preencher os `{{placeholders}}` em `ai-docs/PRD.md` e em
        `CLAUDE.md`; depois `/claude:create-tasks` → `/claude:dev`. Lembrar de curar
        `.claude/skills/` e `ai-docs/tools.yaml`.
    - Se o auto-commit local foi habilitado no passo 4, avise que ele só
      entra em vigor na próxima sessão do Claude Code aberta nesse projeto.
+   - Se o registro de pesquisas foi habilitado no passo 5, avise que a
+     skill `pesquisa-workflow` precisa estar instalada globalmente
+     (`~/.claude/skills/pesquisa-workflow/`) para o registro automático
+     funcionar — sem ela, só o comando `/claude:pesquisa` (rodado à mão)
+     funciona.
 
 ## Regras
 
@@ -119,4 +153,4 @@ seu próprio repositório limpo).
 - As skills e MCPs do usuário são **globais** (`~/.claude/`), então o projeto
   novo já nasce com elas — inclusive a skill `git-workflow`, que já cobre
   branch por tarefa e commit por tarefa concluída por padrão. O hook do
-  passo 4 é só uma rede de segurança extra, opt-in por projeto.
+  passo 4 e a pasta `pesquisa/` do passo 5 são extras opt-in por projeto.

@@ -1,22 +1,27 @@
-# `.claude/` deste projeto — comando + skill de versionamento Git
+# `.claude/` deste projeto — comandos + skills de automação
 
 Esta pasta traz, além dos comandos padrão do template `harness-lite`
-(`learning`, `manual-verify`), dois itens específicos de workflow com Git:
+(`learning`, `manual-verify`), os itens específicos de workflow deste
+repositório: versionamento Git automático e registro automático de
+pesquisas.
 
 ```
 .claude/
 ├── commands/claude/
 │   ├── learning.md          # /claude:learning (padrão do harness-lite)
 │   ├── manual-verify.md     # /claude:manual-verify (padrão do harness-lite)
+│   ├── pesquisa.md          # /claude:pesquisa — pesquisa um tema e registra em pesquisa/
 │   └── novo-projeto.md      # /claude:novo-projeto — scaffold de projeto novo
 └── skills/
-    └── git-workflow/         # conhecimento prático de Git + regras de automação
-        ├── SKILL.md
-        └── reference/
-            ├── comandos-essenciais.md
-            ├── comandos-avancados.md
-            ├── branching-merge-fluxos.md
-            └── boas-praticas-seguranca.md
+    ├── git-workflow/         # conhecimento prático de Git + regras de automação
+    │   ├── SKILL.md
+    │   └── reference/
+    │       ├── comandos-essenciais.md
+    │       ├── comandos-avancados.md
+    │       ├── branching-merge-fluxos.md
+    │       └── boas-praticas-seguranca.md
+    └── pesquisa-workflow/     # registro automático de pesquisas em pesquisa/
+        └── SKILL.md
 templates/                     # os templates que /claude:novo-projeto copia
 ├── harness-lite/
 └── harness-full/
@@ -49,12 +54,32 @@ Code passa a seguir por padrão em qualquer repositório:
 
 Ver o conteúdo completo em [`skills/git-workflow/SKILL.md`](skills/git-workflow/SKILL.md).
 
+### Skill `pesquisa-workflow`
+
+Registro automático de pesquisas: sempre que concluo uma investigação não
+trivial (múltiplas buscas/leituras sobre um tema) num projeto que já tem uma
+pasta `pesquisa/` na raiz, salvo uma nota estruturada em
+`pesquisa/<slug>.md` e atualizo um índice em `pesquisa/README.md`, sem
+precisar que o usuário peça. **Opt-in por pasta:** se `pesquisa/` não
+existir, não crio nada sozinho — a pasta nasce ao habilitar a pergunta do
+`/claude:novo-projeto` ou na primeira execução manual do
+`/claude:pesquisa`. Ver
+[`skills/pesquisa-workflow/SKILL.md`](skills/pesquisa-workflow/SKILL.md).
+
+### Comando `/claude:pesquisa`
+
+Pesquisa um tema explícito e registra a nota no mesmo formato que a skill
+usa automaticamente — também serve para criar a pasta `pesquisa/` na mão
+(bootstrap), ativando o registro automático dali em diante. Ver
+[`commands/claude/pesquisa.md`](commands/claude/pesquisa.md).
+
 ### Comando `/claude:novo-projeto`
 
 Cria um projeto novo a partir de um template (`lite` ou `full`), inicializa
 um repositório Git limpo, e pergunta se você quer habilitar — **só naquele
-projeto** — um hook `Stop` que faz um commit local de segurança ao final de
-cada resposta (nunca push/pull, só commit local). Ver
+projeto** — (1) um hook `Stop` que faz um commit local de segurança ao final
+de cada resposta (nunca push/pull, só commit local) e (2) a pasta
+`pesquisa/` com o registro automático de pesquisas. Ver
 [`commands/claude/novo-projeto.md`](commands/claude/novo-projeto.md).
 
 Os templates que ele copia (`templates/harness-lite`, `templates/harness-full`)
@@ -73,11 +98,13 @@ Para que as regras valham em **todo projeto**, não só neste:
 git clone https://github.com/DadosCoelho/comand-novo-projeto.git \
   ~/Documents/GitHub/comand-novo-projeto
 
-# 1) copie a skill para a pasta global de skills
+# 1) copie as skills para a pasta global de skills
 cp -r ~/Documents/GitHub/comand-novo-projeto/.claude/skills/git-workflow ~/.claude/skills/git-workflow
+cp -r ~/Documents/GitHub/comand-novo-projeto/.claude/skills/pesquisa-workflow ~/.claude/skills/pesquisa-workflow
 
-# 2) copie o comando para a pasta global de comandos (namespace claude:)
+# 2) copie os comandos para a pasta global de comandos (namespace claude:)
 cp ~/Documents/GitHub/comand-novo-projeto/.claude/commands/claude/novo-projeto.md ~/.claude/commands/claude/novo-projeto.md
+cp ~/Documents/GitHub/comand-novo-projeto/.claude/commands/claude/pesquisa.md ~/.claude/commands/claude/pesquisa.md
 # os templates ficam onde estão, dentro do clone — o comando os lê de lá
 ```
 
@@ -87,18 +114,22 @@ No Windows/PowerShell:
 git clone https://github.com/DadosCoelho/comand-novo-projeto.git `
   "$env:USERPROFILE\Documents\GitHub\comand-novo-projeto"
 Copy-Item -Recurse "$env:USERPROFILE\Documents\GitHub\comand-novo-projeto\.claude\skills\git-workflow" "$HOME\.claude\skills\git-workflow"
+Copy-Item -Recurse "$env:USERPROFILE\Documents\GitHub\comand-novo-projeto\.claude\skills\pesquisa-workflow" "$HOME\.claude\skills\pesquisa-workflow"
 Copy-Item "$env:USERPROFILE\Documents\GitHub\comand-novo-projeto\.claude\commands\claude\novo-projeto.md" "$HOME\.claude\commands\claude\novo-projeto.md"
+Copy-Item "$env:USERPROFILE\Documents\GitHub\comand-novo-projeto\.claude\commands\claude\pesquisa.md" "$HOME\.claude\commands\claude\pesquisa.md"
 ```
 
-> A skill sozinha (sem clonar o repositório) continua funcionando
-> normalmente — ela não depende de `templates/`. É só o comando
+> As skills sozinhas (sem clonar o repositório) continuam funcionando
+> normalmente — nenhuma depende de `templates/`. É só o comando
 > `/claude:novo-projeto` que precisa do clone existir naquele caminho.
+> `/claude:pesquisa` já vem copiado dentro dos templates também, então
+> qualquer projeto gerado por eles já nasce com o comando disponível.
 
 ### Reforço opcional no `CLAUDE.md` global
 
-A skill já é descoberta automaticamente pelo Claude Code (gatilho definido
-no frontmatter de `SKILL.md`), mas para garantir que as regras valham mesmo
-se o gatilho não disparar, adicione ao seu `~/.claude/CLAUDE.md`:
+As skills já são descobertas automaticamente pelo Claude Code (gatilho
+definido no frontmatter de cada `SKILL.md`), mas para garantir que as regras
+valham mesmo se o gatilho não disparar, adicione ao seu `~/.claude/CLAUDE.md`:
 
 ```markdown
 ## Versionamento automático (skill `git-workflow`)
@@ -111,6 +142,17 @@ global `git-workflow` (`~/.claude/skills/git-workflow/`):
 - Commit local atômico ao final de cada tarefa concluída.
 - `git push`/`pull`/`fetch` e ações no GitHub/GitLab só com autorização
   explícita na conversa.
+
+## Registro automático de pesquisas (skill `pesquisa-workflow`)
+
+Em todo projeto que já tenha uma pasta `pesquisa/` na raiz, siga a skill
+global `pesquisa-workflow` (`~/.claude/skills/pesquisa-workflow/`):
+
+- Ao concluir uma pesquisa não trivial (múltiplas buscas/leituras sobre um
+  tema), salvar uma nota estruturada em `pesquisa/<slug>.md` e atualizar o
+  índice em `pesquisa/README.md`, sem que o usuário precise pedir.
+- Se `pesquisa/` não existir no projeto, não criar nada sozinho — é
+  opt-in por pasta (ver `/claude:novo-projeto` ou `/claude:pesquisa`).
 ```
 
 ## Por que Git local é automático mas Git remoto não

@@ -23,9 +23,11 @@ CLAUDE.md                 # project conventions + the 2 commands (fill in the no
 │   └── claude/               # all user commands live here → /claude:<name>
 │       ├── learning.md       # /claude:learning — record a lesson in ai-docs/lessons.md
 │       ├── manual-verify.md  # /claude:manual-verify — run a verification you describe
+│       ├── pesquisa.md       # /claude:pesquisa — research a topic, record it in pesquisa/
 │       └── novo-projeto.md   # /claude:novo-projeto — scaffold a new project from a template
 └── skills/
-    └── git-workflow/          # practical Git knowledge + automatic local-versioning rules
+    ├── git-workflow/          # practical Git knowledge + automatic local-versioning rules
+    └── pesquisa-workflow/      # automatic research-recording rules (opt-in via pesquisa/)
 ai-docs/
 └── lessons.md            # running log of lessons (grown by /claude:learning)
 pesquisa/
@@ -35,8 +37,9 @@ templates/                  # bundled harness templates that /claude:novo-projet
 └── harness-full/
 ```
 
-> `commands/claude/novo-projeto.md`, `skills/git-workflow/` and `templates/`
-> are extras on top of the base `harness-lite` template — see
+> `commands/claude/novo-projeto.md`, `commands/claude/pesquisa.md`,
+> `skills/git-workflow/`, `skills/pesquisa-workflow/` and `templates/` are
+> extras on top of the base `harness-lite` template — see
 > [`.claude/README.md`](.claude/README.md) for what they do and how to
 > install them globally on another machine.
 
@@ -44,8 +47,10 @@ templates/                  # bundled harness templates that /claude:novo-projet
 
 1. Fill the **“Project-specific notes”** in `CLAUDE.md` (stack, package
    manager, run/build/test commands, conventions).
-2. Start working. Use `/claude:learning` after any avoidable mistake and
-   `/claude:manual-verify` when you want an explicit check run.
+2. Start working. Use `/claude:learning` after any avoidable mistake,
+   `/claude:manual-verify` when you want an explicit check run, and
+   `/claude:pesquisa` when you want to research a topic and record it in
+   `pesquisa/`.
 
 ## Stack skills & MCPs
 
@@ -59,3 +64,4 @@ apply here automatically — no per-project setup needed.
 |---|---|
 | `/claude:learning [description]` | Appends a dated lesson (context, root cause, how to avoid, tags) to `ai-docs/lessons.md`. |
 | `/claude:manual-verify [request]` | Runs a free-form verification you describe (browser via Playwright MCP if available, CLI checks, etc.) and reports what needs human action. |
+| `/claude:pesquisa [topic]` | Researches a topic and records a structured note in `pesquisa/<slug>.md`, updating the index in `pesquisa/README.md`. First run bootstraps the folder and, with the global `pesquisa-workflow` skill installed, turns on automatic research-recording for future non-trivial investigations. |

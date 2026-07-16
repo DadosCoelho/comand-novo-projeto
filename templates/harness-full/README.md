@@ -81,10 +81,16 @@ ai-docs/
 
 .claude/
 ├── agents/                  # 6 subagents that power the workflow
-├── commands/                # 5 slash commands (/claude:create-tasks, /claude:dev, …)
+├── commands/                # 6 slash commands (/claude:create-tasks, /claude:dev, …)
 ├── skills/                  # skill-creator (the one bundled skill — add your own)
 └── settings.json            # agent-teams env var (add hooks here if you want any)
 ```
+
+> A `pesquisa/` folder appears once `/claude:pesquisa` runs for the first
+> time — it's not part of the initial scaffold. With the optional
+> `pesquisa-workflow` skill installed globally (`~/.claude/skills/`), once
+> that folder exists, non-trivial research gets recorded there automatically
+> too — no need to call the command every time.
 
 ---
 
@@ -144,6 +150,7 @@ ai-docs/
 | `/claude:design [create\|lint\|check\|export\|spec]` | Manages `DESIGN.md` (Google Labs alpha spec). |
 | `/claude:learning [description]` | Records a lesson in `ai-docs/lessons.md`. |
 | `/claude:manual-verify [request]` | Runs a free-form verification you describe and reports what needs human action. |
+| `/claude:pesquisa [topic]` | Researches a topic and records a structured note in `pesquisa/<slug>.md`, bootstrapping the folder on first run. |
 
 See `CLAUDE.md` for the full `/claude:dev` flag reference and the multi-tab /
 worktree workflow.
