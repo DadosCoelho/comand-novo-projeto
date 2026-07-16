@@ -1,70 +1,101 @@
-# Claude Code Harness — Lite
+# comand-novo-projeto
 
-A **minimal** Claude Code starter for quick / small projects: a good
-`CLAUDE.md` with working conventions, plus two self-contained slash commands.
-No PRD, no task graph, no sub-agents, no hooks — none of the ceremony (or token
-cost) of the full harness.
+Kit pessoal para o Claude Code: gera projetos novos a partir de dois
+templates (`harness-lite`/`harness-full`) e traz automações que valem em
+**qualquer** projeto — versionamento Git automático, registro automático de
+pesquisas e uma árvore de commits sempre atualizada.
 
-This repo is a **GitHub template**: click **“Use this template” → Create a new
-repository** and start coding.
+> **Este repositório não é "Use this template"** — ele precisa ser
+> **clonado** num caminho fixo, porque o comando `/claude:novo-projeto` lê os
+> templates de dentro do próprio clone. (Os templates em si, sim, podem virar
+> repositórios "Use this template" separados no GitHub — ver
+> [`templates/harness-lite/README.md`](templates/harness-lite/README.md) e
+> [`templates/harness-full/README.md`](templates/harness-full/README.md).)
 
-> Building something bigger with a real roadmap? Use the **`harness-full`**
-> template instead — it adds the PRD → `/claude:create-tasks` → `/claude:dev` flow with
-> branch-per-task isolation and automatic audits.
+## Clone e instalação
 
-## What's inside
+Clone exatamente neste caminho (é onde `/claude:novo-projeto` espera
+encontrar o repositório):
+
+```bash
+git clone https://github.com/DadosCoelho/comand-novo-projeto.git \
+  ~/Documents/GitHub/comand-novo-projeto
+bash ~/Documents/GitHub/comand-novo-projeto/.claude/scripts/install-global.sh
+```
+
+No Windows/PowerShell:
+
+```powershell
+git clone https://github.com/DadosCoelho/comand-novo-projeto.git `
+  "$env:USERPROFILE\Documents\GitHub\comand-novo-projeto"
+powershell -File "$env:USERPROFILE\Documents\GitHub\comand-novo-projeto\.claude\scripts\install-global.ps1"
+```
+
+O `install-global` copia as skills (`git-workflow`, `pesquisa-workflow`) e os
+comandos (`/claude:novo-projeto`, `/claude:pesquisa`) para `~/.claude/` — daí
+em diante eles valem em **qualquer** projeto na máquina, não só neste
+repositório. Detalhes, flags (`--force`/`-Force`) e o que o script faz por
+baixo: [`.claude/README.md`](.claude/README.md).
+
+## Uso
+
+Depois de instalado, dentro de qualquer sessão do Claude Code:
 
 ```
-CLAUDE.md                 # project conventions + the 2 commands (fill in the notes)
-.gitignore                # sensible defaults
+/claude:novo-projeto lite <nome-do-projeto>   # scaffold minimo
+/claude:novo-projeto full <nome-do-projeto>   # scaffold com PRD -> tasks -> dev
+```
+
+Isso cria `%USERPROFILE%\Documents\GitHub\<nome-do-projeto>` com um
+repositório Git novo e limpo (sem o histórico deste repo), a partir do
+template escolhido — e pergunta se você quer habilitar, só naquele projeto,
+o checkpoint automático de commits e o registro automático de pesquisas.
+
+## O que tem aqui
+
+```
+CLAUDE.md                 # convenções deste repositório
 .claude/
-├── README.md              # what's below, plus how to install it globally on another machine
-├── commands/
-│   └── claude/               # all user commands live here → /claude:<name>
-│       ├── learning.md       # /claude:learning — record a lesson in ai-docs/lessons.md
-│       ├── manual-verify.md  # /claude:manual-verify — run a verification you describe
-│       ├── pesquisa.md       # /claude:pesquisa — research a topic, record it in pesquisa/
-│       └── novo-projeto.md   # /claude:novo-projeto — scaffold a new project from a template
+├── arvore-de-commits.md    # diagrama Mermaid do historico REAL deste repo
+├── README.md                # detalhes de cada skill/comando + instalação global
+├── commands/claude/
+│   ├── learning.md          # /claude:learning
+│   ├── manual-verify.md     # /claude:manual-verify
+│   ├── pesquisa.md          # /claude:pesquisa — pesquisa um tema, registra em pesquisa/
+│   └── novo-projeto.md      # /claude:novo-projeto — gera projeto novo a partir de um template
 ├── skills/
-│   ├── git-workflow/          # practical Git knowledge + automatic local-versioning rules
-│   └── pesquisa-workflow/      # automatic research-recording rules (opt-in via pesquisa/)
+│   ├── git-workflow/         # conhecimento pratico de Git + auto-versionamento
+│   └── pesquisa-workflow/     # registro automatico de pesquisas (opt-in via pesquisa/)
 └── scripts/
-    ├── install-global.ps1 / .sh    # installs skills+commands into ~/.claude/
-    └── arvore-de-commits.ps1 / .sh # generates .claude/arvore-de-commits.md (real commit tree)
+    ├── install-global.ps1 / .sh    # instala skills+comandos em ~/.claude/
+    └── arvore-de-commits.ps1 / .sh # gera .claude/arvore-de-commits.md
 ai-docs/
-└── lessons.md            # running log of lessons (grown by /claude:learning)
+└── lessons.md             # licoes registradas por /claude:learning
 pesquisa/
-└── *.md                   # organized research notes on Git (concepts, commands, workflows...)
-templates/                  # bundled harness templates that /claude:novo-projeto copies
-├── harness-lite/
-└── harness-full/
+└── *.md                    # pesquisa organizada sobre Git (conceitos, comandos, fluxos...)
+templates/                  # os dois templates que /claude:novo-projeto copia
+├── harness-lite/            # minimo: CLAUDE.md + 3 comandos
+└── harness-full/            # PRD -> /claude:create-tasks -> /claude:dev, com agentes e auditoria
 ```
 
-> `commands/claude/novo-projeto.md`, `commands/claude/pesquisa.md`,
-> `skills/git-workflow/`, `skills/pesquisa-workflow/` and `templates/` are
-> extras on top of the base `harness-lite` template — see
-> [`.claude/README.md`](.claude/README.md) for what they do and how to
-> install them globally on another machine.
+## Documentação
 
-## After “Use this template”
+- [`.claude/README.md`](.claude/README.md) — o que cada skill/comando faz,
+  como instalar globalmente numa máquina nova, e como funciona a árvore de
+  commits ao vivo.
+- [`pesquisa/`](pesquisa/) — pesquisa completa sobre Git (conceitos,
+  internals, comandos, workflows, boas práticas) que fundamenta a skill
+  `git-workflow`.
+- [`templates/harness-lite/README.md`](templates/harness-lite/README.md) e
+  [`templates/harness-full/README.md`](templates/harness-full/README.md) —
+  documentação de cada template, do ponto de vista de quem recebe um projeto
+  gerado a partir dele (ou clona o template direto do GitHub).
 
-1. Fill the **“Project-specific notes”** in `CLAUDE.md` (stack, package
-   manager, run/build/test commands, conventions).
-2. Start working. Use `/claude:learning` after any avoidable mistake,
-   `/claude:manual-verify` when you want an explicit check run, and
-   `/claude:pesquisa` when you want to research a topic and record it in
-   `pesquisa/`.
+## Comandos
 
-## Stack skills & MCPs
-
-This lite kit ships no skills. If you keep your common stack skills **global**
-at `~/.claude/skills/` and your MCP servers configured at the user level, they
-apply here automatically — no per-project setup needed.
-
-## Commands
-
-| Command | What it does |
+| Comando | O que faz |
 |---|---|
-| `/claude:learning [description]` | Appends a dated lesson (context, root cause, how to avoid, tags) to `ai-docs/lessons.md`. |
-| `/claude:manual-verify [request]` | Runs a free-form verification you describe (browser via Playwright MCP if available, CLI checks, etc.) and reports what needs human action. |
-| `/claude:pesquisa [topic]` | Researches a topic and records a structured note in `pesquisa/<slug>.md`, updating the index in `pesquisa/README.md`. First run bootstraps the folder and, with the global `pesquisa-workflow` skill installed, turns on automatic research-recording for future non-trivial investigations. |
+| `/claude:novo-projeto lite\|full <nome>` | Cria um projeto novo em `~/Documents/GitHub/<nome>` a partir de um template, com repositório Git limpo. |
+| `/claude:pesquisa [tema]` | Pesquisa um tema e registra uma nota em `pesquisa/<slug>.md`, atualizando o índice. Primeira execução cria a pasta. |
+| `/claude:learning [descrição]` | Registra uma lição em `ai-docs/lessons.md`. |
+| `/claude:manual-verify [pedido]` | Roda uma verificação livre que você descrever e relata o que precisa de ação humana. |
