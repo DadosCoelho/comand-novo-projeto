@@ -6,47 +6,49 @@ allowed-tools: Bash, Read, Glob, Write, AskUserQuestion
 
 # /claude:novo-projeto — gerar projeto a partir de um template harness
 
-Crie um projeto novo copiando um dos templates locais para a pasta `GitHub`,
-sem arrastar o histórico git do template (cada projeto nasce com seu próprio
-repositório limpo).
+Crie um projeto novo copiando um dos templates empacotados neste próprio
+repositório (`templates/harness-lite`, `templates/harness-full`) para a
+pasta `GitHub`, sem arrastar histórico git nenhum (cada projeto nasce com
+seu próprio repositório limpo).
 
 ## Argumentos
 
 `$ARGUMENTS` segue o formato: `<template> <nome-do-projeto>`
 
 - **template**: `lite` ou `full`
-  - `lite` → `C:\Users\daldo\Documents\GitHub\harness-templates\harness-lite`
-  - `full` → `C:\Users\daldo\Documents\GitHub\harness-templates\harness-full`
+  - `lite` → `<comand-novo-projeto>\templates\harness-lite`
+  - `full` → `<comand-novo-projeto>\templates\harness-full`
 - **nome-do-projeto**: o nome da pasta a criar dentro de
-  `C:\Users\daldo\Documents\GitHub\`.
+  `%USERPROFILE%\Documents\GitHub\`.
+
+> **Pré-requisito:** este comando lê os templates de dentro do repositório
+> `comand-novo-projeto` (o mesmo que contém este arquivo), esperado em
+> `%USERPROFILE%\Documents\GitHub\comand-novo-projeto\`. Se você clonou
+> esse repositório em outro lugar, ajuste `$repoRoot` no passo 2 abaixo.
 
 ## Passos
 
 1. **Parse e validação.** Separe `$ARGUMENTS` em `<template>` e `<nome>`.
    - Se faltar algum, ou se `<template>` não for `lite`/`full`, **pare** e
      mostre o uso: `/claude:novo-projeto lite|full <nome-do-projeto>`.
-   - Resolva o caminho de origem (`harness-lite` ou `harness-full`) e o destino
-     `C:\Users\daldo\Documents\GitHub\<nome>`.
+   - Resolva o caminho de origem (`harness-lite` ou `harness-full` dentro de
+     `templates/`) e o destino `%USERPROFILE%\Documents\GitHub\<nome>`.
    - Se o destino **já existir**, pare e avise — nunca sobrescreva uma pasta
      existente.
 
-2. **Copiar o template (sem o `.git` dele).** Use PowerShell via Bash tool ou
-   diretamente. O essencial: copiar tudo **exceto** a pasta `.git` do template.
+2. **Copiar o template.** Os templates empacotados em `templates/` já não
+   têm `.git` próprio (foram removidos ao empacotar), então a cópia é
+   direta — sem exclusão nem limpeza extra:
 
    ```powershell
-   $src  = "C:\Users\daldo\Documents\GitHub\harness-templates\harness-<TEMPLATE>"
-   $dest = "C:\Users\daldo\Documents\GitHub\<NOME>"
+   $repoRoot = "$env:USERPROFILE\Documents\GitHub\comand-novo-projeto"
+   $src  = "$repoRoot\templates\harness-<TEMPLATE>"
+   $dest = "$env:USERPROFILE\Documents\GitHub\<NOME>"
+   if (-not (Test-Path $src)) { throw "Template nao encontrado em $src — confirme que comand-novo-projeto esta clonado em $repoRoot (ou ajuste `$repoRoot` neste comando)." }
    if (Test-Path $dest) { throw "Destino já existe: $dest" }
    New-Item -ItemType Directory -Path $dest | Out-Null
-   Copy-Item -Path (Join-Path $src '*') -Destination $dest -Recurse -Force -Exclude '.git'
-   # .git é um diretório oculto; o -Exclude acima cobre o item de topo.
-   # Garanta a remoção caso algo escape:
-   if (Test-Path (Join-Path $dest '.git')) { Remove-Item (Join-Path $dest '.git') -Recurse -Force }
+   Copy-Item -Path (Join-Path $src '*') -Destination $dest -Recurse -Force
    ```
-
-   > Observação: `Copy-Item -Recurse -Exclude '.git'` pode, dependendo da versão,
-   > copiar `.git` aninhado. Por isso o `Remove-Item` de segurança logo depois.
-   > Confirme com um `Test-Path` que `<dest>\.git` não existe ao final.
 
 3. **Inicializar um repositório git limpo** no destino:
 
@@ -110,7 +112,9 @@ repositório limpo).
 ## Regras
 
 - Nunca sobrescreva uma pasta existente — pare e avise.
-- Nunca copie o `.git` do template — cada projeto deve ter histórico próprio.
+- Os templates em `templates/` não têm `.git` próprio — cada projeto novo
+  ganha histórico limpo já pelo passo 3 (`git init`), sem precisar excluir
+  nada na cópia.
 - Não faça `git push` nem crie repositório remoto; isso é decisão do usuário.
 - As skills e MCPs do usuário são **globais** (`~/.claude/`), então o projeto
   novo já nasce com elas — inclusive a skill `git-workflow`, que já cobre

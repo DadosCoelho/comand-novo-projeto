@@ -30,11 +30,15 @@ ai-docs/
 └── lessons.md            # running log of lessons (grown by /claude:learning)
 pesquisa/
 └── *.md                   # organized research notes on Git (concepts, commands, workflows...)
+templates/                  # bundled harness templates that /claude:novo-projeto copies
+├── harness-lite/
+└── harness-full/
 ```
 
-> `commands/claude/novo-projeto.md` and `skills/git-workflow/` are extras on
-> top of the base `harness-lite` template — see [`.claude/README.md`](.claude/README.md)
-> for what they do and how to install them globally on another machine.
+> `commands/claude/novo-projeto.md`, `skills/git-workflow/` and `templates/`
+> are extras on top of the base `harness-lite` template — see
+> [`.claude/README.md`](.claude/README.md) for what they do and how to
+> install them globally on another machine.
 
 ## After “Use this template”
 

@@ -17,6 +17,9 @@ Esta pasta traz, além dos comandos padrão do template `harness-lite`
             ├── comandos-avancados.md
             ├── branching-merge-fluxos.md
             └── boas-praticas-seguranca.md
+templates/                     # os templates que /claude:novo-projeto copia
+├── harness-lite/
+└── harness-full/
 ```
 
 Como estão em `.claude/commands/` e `.claude/skills/` **deste repositório**,
@@ -54,34 +57,42 @@ projeto** — um hook `Stop` que faz um commit local de segurança ao final de
 cada resposta (nunca push/pull, só commit local). Ver
 [`commands/claude/novo-projeto.md`](commands/claude/novo-projeto.md).
 
-> **Atenção — dependência específica desta máquina:** o comando assume que
-> existe uma pasta `harness-templates/` com subpastas `harness-lite` e
-> `harness-full` (os templates de scaffold) num caminho fixo
-> (`C:\Users\<usuário>\Documents\GitHub\harness-templates\...`). Isso **não**
-> vem incluso neste repositório. Antes de usar em outra máquina, ajuste os
-> caminhos `$src`/`$dest` no arquivo para o seu próprio setup, ou adapte o
-> comando para apontar para os templates que você usa (ou remova esse
-> comando e fique só com a skill, se não usar esse fluxo de templates).
+Os templates que ele copia (`templates/harness-lite`, `templates/harness-full`)
+estão **empacotados neste repositório** — não é mais preciso ter uma pasta
+`harness-templates` separada. A única exigência: o comando lê os templates a
+partir de `%USERPROFILE%\Documents\GitHub\comand-novo-projeto\templates\...`,
+então este repositório precisa estar clonado nesse caminho (ajuste `$repoRoot`
+no arquivo do comando se você clonar em outro lugar).
 
 ## Instalar isso globalmente em outra máquina
 
 Para que as regras valham em **todo projeto**, não só neste:
 
 ```bash
+# 0) clone este repositório no caminho esperado pelo comando
+git clone https://github.com/DadosCoelho/comand-novo-projeto.git \
+  ~/Documents/GitHub/comand-novo-projeto
+
 # 1) copie a skill para a pasta global de skills
-cp -r .claude/skills/git-workflow ~/.claude/skills/git-workflow
+cp -r ~/Documents/GitHub/comand-novo-projeto/.claude/skills/git-workflow ~/.claude/skills/git-workflow
 
 # 2) copie o comando para a pasta global de comandos (namespace claude:)
-cp .claude/commands/claude/novo-projeto.md ~/.claude/commands/claude/novo-projeto.md
-# ajuste os caminhos hardcoded do passo 2 do arquivo antes de usar (ver aviso acima)
+cp ~/Documents/GitHub/comand-novo-projeto/.claude/commands/claude/novo-projeto.md ~/.claude/commands/claude/novo-projeto.md
+# os templates ficam onde estão, dentro do clone — o comando os lê de lá
 ```
 
 No Windows/PowerShell:
 
 ```powershell
-Copy-Item -Recurse .claude\skills\git-workflow "$HOME\.claude\skills\git-workflow"
-Copy-Item .claude\commands\claude\novo-projeto.md "$HOME\.claude\commands\claude\novo-projeto.md"
+git clone https://github.com/DadosCoelho/comand-novo-projeto.git `
+  "$env:USERPROFILE\Documents\GitHub\comand-novo-projeto"
+Copy-Item -Recurse "$env:USERPROFILE\Documents\GitHub\comand-novo-projeto\.claude\skills\git-workflow" "$HOME\.claude\skills\git-workflow"
+Copy-Item "$env:USERPROFILE\Documents\GitHub\comand-novo-projeto\.claude\commands\claude\novo-projeto.md" "$HOME\.claude\commands\claude\novo-projeto.md"
 ```
+
+> A skill sozinha (sem clonar o repositório) continua funcionando
+> normalmente — ela não depende de `templates/`. É só o comando
+> `/claude:novo-projeto` que precisa do clone existir naquele caminho.
 
 ### Reforço opcional no `CLAUDE.md` global
 
