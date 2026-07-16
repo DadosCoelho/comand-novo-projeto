@@ -25,11 +25,13 @@ práticas.
 9. [Git vs. GitHub/GitLab/Bitbucket](09-git-vs-plataformas.md) — a
    ferramenta vs. as plataformas.
 10. [Referências](10-referencias.md) — links úteis para aprofundar.
+11. [A árvore de commits — diagramas](11-arvore-de-commits.md) — os mesmos
+    conceitos de branch/merge/rebase/cherry-pick/HEAD, em diagramas Mermaid.
 
 ## Como usar esta pasta
 
 Cada arquivo é independente e pode ser lido isoladamente, mas a leitura em
-ordem (1 → 10) segue uma progressão lógica: do conceito ao uso prático, do
+ordem (1 → 11) segue uma progressão lógica: do conceito ao uso prático, do
 básico ao avançado.
 
 > Existe também um resumo anterior, mais enxuto, em

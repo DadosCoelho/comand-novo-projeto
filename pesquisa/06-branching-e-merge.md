@@ -1,5 +1,9 @@
 # Branching e merge
 
+> Prefere visualizar em diagramas? Ver
+> [11-arvore-de-commits.md](11-arvore-de-commits.md) — os mesmos conceitos
+> abaixo, desenhados em Mermaid.
+
 ## Fast-forward vs. merge commit
 
 Quando você mescla uma branch `feature` em `main`, o Git verifica se `main`
