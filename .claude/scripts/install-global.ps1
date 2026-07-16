@@ -11,7 +11,7 @@ param(
     [switch]$Force
 )
 
-$repoRoot   = Split-Path -Parent $PSScriptRoot
+$repoRoot   = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
 $claudeHome = Join-Path $HOME ".claude"
 
 $skills = @("git-workflow", "pesquisa-workflow")

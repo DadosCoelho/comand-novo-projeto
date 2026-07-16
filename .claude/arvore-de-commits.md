@@ -1,7 +1,7 @@
 # Árvore de commits
 
 > Gerado automaticamente a partir do histórico real do repositório — não editar à mão.
-> Atualizado em: 2026-07-16 15:13:36
+> Atualizado em: 2026-07-16 15:27:06
 
 ```mermaid
 gitGraph
@@ -16,12 +16,14 @@ gitGraph
    commit id: "07dd3db: chore: checkpoint automático (3 arquivo(s): .claude/arvore-de-commits.md,scripts/arvore-de-commits.ps1,scripts/arvore-de-commits.sh)"
    commit id: "42f27ce: chore: checkpoint automático (1 arquivo(s): .claude/arvore-de-commits.md)"
    commit id: "e9d39bc: chore: checkpoint automático (4 arquivo(s): .claude/README.md,.claude/arvore-de-commits.md,scripts/arvore-de-commits.ps1)"
+   commit id: "3f33058: chore: checkpoint automático (1 arquivo(s): .claude/arvore-de-commits.md)"
 ```
 
 <details><summary>Log bruto (git log --graph)</summary>
 
 ```
-* e9d39bc 2026-07-16 chore: checkpoint automático (4 arquivo(s): .claude/README.md,.claude/arvore-de-commits.md,scripts/arvore-de-commits.ps1) (HEAD -> main)
+* 3f33058 2026-07-16 chore: checkpoint automático (1 arquivo(s): .claude/arvore-de-commits.md) (HEAD -> main)
+* e9d39bc 2026-07-16 chore: checkpoint automático (4 arquivo(s): .claude/README.md,.claude/arvore-de-commits.md,scripts/arvore-de-commits.ps1)
 * 42f27ce 2026-07-16 chore: checkpoint automático (1 arquivo(s): .claude/arvore-de-commits.md)
 * 07dd3db 2026-07-16 chore: checkpoint automático (3 arquivo(s): .claude/arvore-de-commits.md,scripts/arvore-de-commits.ps1,scripts/arvore-de-commits.sh)
 * 071f852 2026-07-16 chore: checkpoint automático (3 arquivo(s): .claude/README.md,scripts/install-global.ps1,scripts/install-global.sh)

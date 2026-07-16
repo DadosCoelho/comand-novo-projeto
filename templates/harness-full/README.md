@@ -83,6 +83,8 @@ ai-docs/
 ├── agents/                  # 6 subagents that power the workflow
 ├── commands/                # 6 slash commands (/claude:create-tasks, /claude:dev, …)
 ├── skills/                  # skill-creator (the one bundled skill — add your own)
+├── scripts/
+│   └── arvore-de-commits.ps1 / .sh  # generates .claude/arvore-de-commits.md
 └── settings.json            # agent-teams env var (add hooks here if you want any)
 ```
 
@@ -91,6 +93,10 @@ ai-docs/
 > `pesquisa-workflow` skill installed globally (`~/.claude/skills/`), once
 > that folder exists, non-trivial research gets recorded there automatically
 > too — no need to call the command every time.
+>
+> `.claude/arvore-de-commits.md` similarly only appears once
+> `arvore-de-commits.sh`/`.ps1` runs (manually, or automatically if the
+> optional `Stop` checkpoint hook from `/claude:novo-projeto` is enabled).
 
 ---
 

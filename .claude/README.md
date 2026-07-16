@@ -7,27 +7,30 @@ pesquisas.
 
 ```
 .claude/
+├── arvore-de-commits.md    # gerado por scripts/arvore-de-commits.* -- ver secao abaixo
 ├── commands/claude/
 │   ├── learning.md          # /claude:learning (padrão do harness-lite)
 │   ├── manual-verify.md     # /claude:manual-verify (padrão do harness-lite)
 │   ├── pesquisa.md          # /claude:pesquisa — pesquisa um tema e registra em pesquisa/
 │   └── novo-projeto.md      # /claude:novo-projeto — scaffold de projeto novo
-└── skills/
-    ├── git-workflow/         # conhecimento prático de Git + regras de automação
-    │   ├── SKILL.md
-    │   └── reference/
-    │       ├── comandos-essenciais.md
-    │       ├── comandos-avancados.md
-    │       ├── branching-merge-fluxos.md
-    │       └── boas-praticas-seguranca.md
-    └── pesquisa-workflow/     # registro automático de pesquisas em pesquisa/
-        └── SKILL.md
-scripts/
-├── install-global.ps1 / .sh    # instala skills+comandos em ~/.claude/
-└── arvore-de-commits.ps1 / .sh # gera .claude/arvore-de-commits.md
+├── skills/
+│   ├── git-workflow/         # conhecimento prático de Git + regras de automação
+│   │   ├── SKILL.md
+│   │   └── reference/
+│   │       ├── comandos-essenciais.md
+│   │       ├── comandos-avancados.md
+│   │       ├── branching-merge-fluxos.md
+│   │       └── boas-praticas-seguranca.md
+│   └── pesquisa-workflow/     # registro automático de pesquisas em pesquisa/
+│       └── SKILL.md
+└── scripts/
+    ├── install-global.ps1 / .sh    # instala skills+comandos em ~/.claude/
+    └── arvore-de-commits.ps1 / .sh # gera .claude/arvore-de-commits.md
 templates/                     # os templates que /claude:novo-projeto copia
 ├── harness-lite/
+│   └── .claude/scripts/arvore-de-commits.ps1 / .sh  # bundlado, sem install-global
 └── harness-full/
+    └── .claude/scripts/arvore-de-commits.ps1 / .sh  # idem
 ```
 
 Como estão em `.claude/commands/` e `.claude/skills/` **deste repositório**,
@@ -99,12 +102,18 @@ Diferente de [`pesquisa/11-arvore-de-commits.md`](../pesquisa/11-arvore-de-commi
 diagrama Mermaid `gitGraph` gerado a partir do **histórico real** deste
 repositório — commits, branches e merges de verdade, sempre atualizado.
 
-- Gerado por [`scripts/arvore-de-commits.sh`](../scripts/arvore-de-commits.sh) /
-  [`.ps1`](../scripts/arvore-de-commits.ps1) — rode manualmente a qualquer
+- Gerado por [`scripts/arvore-de-commits.sh`](scripts/arvore-de-commits.sh) /
+  [`.ps1`](scripts/arvore-de-commits.ps1) — rode manualmente a qualquer
   momento para atualizar.
-- Neste projeto, o hook `Stop` (item 1 do `/claude:novo-projeto`, ver acima) já
-  chama esse script a cada resposta, então o arquivo se mantém sozinho. Sem o
-  hook, é só um gerador sob demanda.
+- O script é **bundlado em ambos os templates** (`.claude/scripts/` dentro de
+  cada um) — todo projeto criado via `/claude:novo-projeto` já nasce com ele,
+  independente do hook. O hook `Stop` (item 1 do `/claude:novo-projeto`, ver
+  acima) chama esse script a cada resposta, então o arquivo se mantém
+  sozinho; sem o hook, é só um gerador sob demanda.
+- Diferente das skills/comandos globais, este script **não** é distribuído
+  por `install-global` — ele é sempre local ao projeto (bundlado ou copiado
+  manualmente), porque opera sobre "o repositório onde ele está", não sobre
+  um repositório arbitrário.
 - O arquivo sempre fica **um commit atrasado**: ele não pode conter a hash do
   commit que o atualiza, por definição (mesma limitação de qualquer changelog
   autogerado).
@@ -122,7 +131,7 @@ de instalação:
 ```bash
 git clone https://github.com/DadosCoelho/comand-novo-projeto.git \
   ~/Documents/GitHub/comand-novo-projeto
-bash ~/Documents/GitHub/comand-novo-projeto/scripts/install-global.sh
+bash ~/Documents/GitHub/comand-novo-projeto/.claude/scripts/install-global.sh
 ```
 
 No Windows/PowerShell:
@@ -130,10 +139,10 @@ No Windows/PowerShell:
 ```powershell
 git clone https://github.com/DadosCoelho/comand-novo-projeto.git `
   "$env:USERPROFILE\Documents\GitHub\comand-novo-projeto"
-powershell -File "$env:USERPROFILE\Documents\GitHub\comand-novo-projeto\scripts\install-global.ps1"
+powershell -File "$env:USERPROFILE\Documents\GitHub\comand-novo-projeto\.claude\scripts\install-global.ps1"
 ```
 
-O script (`scripts/install-global.sh` / `.ps1`) copia, de dentro do clone
+O script (`.claude/scripts/install-global.sh` / `.ps1`) copia, de dentro do clone
 para `~/.claude/`:
 
 - **Skills** (`.claude/skills/` → `~/.claude/skills/`): `git-workflow`,

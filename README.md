@@ -25,9 +25,12 @@ CLAUDE.md                 # project conventions + the 2 commands (fill in the no
 │       ├── manual-verify.md  # /claude:manual-verify — run a verification you describe
 │       ├── pesquisa.md       # /claude:pesquisa — research a topic, record it in pesquisa/
 │       └── novo-projeto.md   # /claude:novo-projeto — scaffold a new project from a template
-└── skills/
-    ├── git-workflow/          # practical Git knowledge + automatic local-versioning rules
-    └── pesquisa-workflow/      # automatic research-recording rules (opt-in via pesquisa/)
+├── skills/
+│   ├── git-workflow/          # practical Git knowledge + automatic local-versioning rules
+│   └── pesquisa-workflow/      # automatic research-recording rules (opt-in via pesquisa/)
+└── scripts/
+    ├── install-global.ps1 / .sh    # installs skills+commands into ~/.claude/
+    └── arvore-de-commits.ps1 / .sh # generates .claude/arvore-de-commits.md (real commit tree)
 ai-docs/
 └── lessons.md            # running log of lessons (grown by /claude:learning)
 pesquisa/

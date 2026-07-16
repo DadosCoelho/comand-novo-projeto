@@ -64,7 +64,10 @@ seu próprio repositório limpo).
    (evento `Stop`) quando houver mudanças relevantes no working tree —
    nunca `push`/`pull`/`fetch`, só commit local. Isso é complementar aos
    commits atômicos que já são feitos por padrão (ver skill global
-   `git-workflow`); serve como rede de segurança extra.
+   `git-workflow`); serve como rede de segurança extra. O mesmo hook também
+   chama `.claude/scripts/arvore-de-commits.sh` (já bundlado no template) a
+   cada resposta, regenerando `.claude/arvore-de-commits.md` — o diagrama
+   Mermaid `gitGraph` do histórico real do projeto.
 
    - Pergunta: "Quer habilitar auto-commit local automático (checkpoint a
      cada resposta) neste projeto?" com opções "Sim, habilitar" / "Não,
@@ -82,7 +85,7 @@ seu próprio repositório limpo).
                  "shell": "bash",
                  "statusMessage": "Verificando checkpoint automático...",
                  "timeout": 30,
-                 "command": "git rev-parse --is-inside-work-tree >/dev/null 2>&1 || exit 0\n[ -z \"$(git status --porcelain --untracked-files=all 2>/dev/null)\" ] && exit 0\ngit add -A -- . 2>/dev/null\nstaged=$(git diff --cached --name-only)\n[ -z \"$staged\" ] && exit 0\nn=$(printf '%s\\n' \"$staged\" | wc -l | tr -d ' ')\nsample=$(printf '%s\\n' \"$staged\" | head -3 | tr '\\n' ',' | sed 's/,$//')\nmsg=\"chore: checkpoint automático ($n arquivo(s): $sample)\"\nif git commit -q -m \"$msg\" 2>/dev/null; then\n  esc=\"Commit automático: $msg\"\n  esc=\"${esc//\\\\/\\\\\\\\}\"\n  esc=\"${esc//\\\"/\\\\\\\"}\"\n  printf '{\"systemMessage\": \"%s\"}\\n' \"$esc\"\nfi"
+                 "command": "git rev-parse --is-inside-work-tree >/dev/null 2>&1 || exit 0\nroot=$(git rev-parse --show-toplevel)\nbash \"$root/.claude/scripts/arvore-de-commits.sh\" >/dev/null 2>&1 || true\n[ -z \"$(git status --porcelain --untracked-files=all 2>/dev/null)\" ] && exit 0\ngit add -A -- . 2>/dev/null\nstaged=$(git diff --cached --name-only)\n[ -z \"$staged\" ] && exit 0\nn=$(printf '%s\\n' \"$staged\" | wc -l | tr -d ' ')\nsample=$(printf '%s\\n' \"$staged\" | head -3 | tr '\\n' ',' | sed 's/,$//')\nmsg=\"chore: checkpoint automático ($n arquivo(s): $sample)\"\nif git commit -q -m \"$msg\" 2>/dev/null; then\n  esc=\"Commit automático: $msg\"\n  esc=\"${esc//\\\\/\\\\\\\\}\"\n  esc=\"${esc//\\\"/\\\\\\\"}\"\n  printf '{\"systemMessage\": \"%s\"}\\n' \"$esc\"\nfi"
                }
              ]
            }
@@ -94,7 +97,10 @@ seu próprio repositório limpo).
    - `.claude/settings.local.json` já está no `.gitignore` de ambos os
      templates (lite e full) — não versionar essa preferência pessoal.
    - Se **não**, não crie o arquivo; não pergunte de novo depois, o
-     usuário pode pedir manualmente mais tarde se mudar de ideia.
+     usuário pode pedir manualmente mais tarde se mudar de ideia. Sem o
+     hook, `.claude/scripts/arvore-de-commits.sh`/`.ps1` continuam
+     disponíveis para rodar sob demanda (`.claude/arvore-de-commits.md` só
+     é criado/atualizado quando alguém chama o script).
 
 5. **Perguntar sobre registro automático de pesquisas.** Use
    `AskUserQuestion` para perguntar se o usuário quer habilitar, neste
@@ -136,7 +142,9 @@ seu próprio repositório limpo).
        `CLAUDE.md`; depois `/claude:create-tasks` → `/claude:dev`. Lembrar de curar
        `.claude/skills/` e `ai-docs/tools.yaml`.
    - Se o auto-commit local foi habilitado no passo 4, avise que ele só
-     entra em vigor na próxima sessão do Claude Code aberta nesse projeto.
+     entra em vigor na próxima sessão do Claude Code aberta nesse projeto, e
+     que a partir daí `.claude/arvore-de-commits.md` também passa a ser
+     mantido sozinho.
    - Se o registro de pesquisas foi habilitado no passo 5, avise que a
      skill `pesquisa-workflow` precisa estar instalada globalmente
      (`~/.claude/skills/pesquisa-workflow/`) para o registro automático
@@ -154,3 +162,6 @@ seu próprio repositório limpo).
   novo já nasce com elas — inclusive a skill `git-workflow`, que já cobre
   branch por tarefa e commit por tarefa concluída por padrão. O hook do
   passo 4 e a pasta `pesquisa/` do passo 5 são extras opt-in por projeto.
+- `.claude/scripts/arvore-de-commits.sh`/`.ps1` vêm bundlados em ambos os
+  templates e sempre disponíveis, independente do que foi respondido no
+  passo 4 — só o hook automático (que os chama a cada resposta) é opt-in.

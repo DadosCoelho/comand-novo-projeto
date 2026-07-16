@@ -18,18 +18,22 @@ repository** and start coding.
 CLAUDE.md                 # project conventions + the 3 commands (fill in the notes)
 .gitignore                # sensible defaults
 .claude/
-└── commands/
-    └── claude/               # all user commands live here → /claude:<name>
-        ├── learning.md       # /claude:learning — record a lesson in ai-docs/lessons.md
-        ├── manual-verify.md  # /claude:manual-verify — run a verification you describe
-        └── pesquisa.md       # /claude:pesquisa — research a topic, record it in pesquisa/
+├── commands/
+│   └── claude/               # all user commands live here → /claude:<name>
+│       ├── learning.md       # /claude:learning — record a lesson in ai-docs/lessons.md
+│       ├── manual-verify.md  # /claude:manual-verify — run a verification you describe
+│       └── pesquisa.md       # /claude:pesquisa — research a topic, record it in pesquisa/
+└── scripts/
+    └── arvore-de-commits.ps1 / .sh  # generates .claude/arvore-de-commits.md
 ai-docs/
 └── lessons.md            # running log of lessons (grown by /claude:learning)
 ```
 
 > A `pesquisa/` folder appears once `/claude:pesquisa` runs for the first
 > time (or if it was pre-created for you) — it's not part of the initial
-> scaffold.
+> scaffold. `.claude/arvore-de-commits.md` similarly only appears once
+> `arvore-de-commits.sh`/`.ps1` runs (manually, or automatically if the
+> optional `Stop` checkpoint hook from `/claude:novo-projeto` is enabled).
 
 ## After “Use this template”
 

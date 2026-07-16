@@ -6,7 +6,7 @@
   Uso: powershell -File scripts\arvore-de-commits.ps1
 #>
 
-$repoRoot = Split-Path -Parent $PSScriptRoot
+$repoRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
 $out = Join-Path $repoRoot ".claude\arvore-de-commits.md"
 
 function Sanitize([string]$s) {
