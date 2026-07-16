@@ -91,21 +91,14 @@ no arquivo do comando se você clonar em outro lugar).
 
 ## Instalar isso globalmente em outra máquina
 
-Para que as regras valham em **todo projeto**, não só neste:
+Para que as regras valham em **todo projeto**, não só neste, clone o
+repositório no caminho esperado pelo `/claude:novo-projeto` e rode o script
+de instalação:
 
 ```bash
-# 0) clone este repositório no caminho esperado pelo comando
 git clone https://github.com/DadosCoelho/comand-novo-projeto.git \
   ~/Documents/GitHub/comand-novo-projeto
-
-# 1) copie as skills para a pasta global de skills
-cp -r ~/Documents/GitHub/comand-novo-projeto/.claude/skills/git-workflow ~/.claude/skills/git-workflow
-cp -r ~/Documents/GitHub/comand-novo-projeto/.claude/skills/pesquisa-workflow ~/.claude/skills/pesquisa-workflow
-
-# 2) copie os comandos para a pasta global de comandos (namespace claude:)
-cp ~/Documents/GitHub/comand-novo-projeto/.claude/commands/claude/novo-projeto.md ~/.claude/commands/claude/novo-projeto.md
-cp ~/Documents/GitHub/comand-novo-projeto/.claude/commands/claude/pesquisa.md ~/.claude/commands/claude/pesquisa.md
-# os templates ficam onde estão, dentro do clone — o comando os lê de lá
+bash ~/Documents/GitHub/comand-novo-projeto/scripts/install-global.sh
 ```
 
 No Windows/PowerShell:
@@ -113,11 +106,33 @@ No Windows/PowerShell:
 ```powershell
 git clone https://github.com/DadosCoelho/comand-novo-projeto.git `
   "$env:USERPROFILE\Documents\GitHub\comand-novo-projeto"
-Copy-Item -Recurse "$env:USERPROFILE\Documents\GitHub\comand-novo-projeto\.claude\skills\git-workflow" "$HOME\.claude\skills\git-workflow"
-Copy-Item -Recurse "$env:USERPROFILE\Documents\GitHub\comand-novo-projeto\.claude\skills\pesquisa-workflow" "$HOME\.claude\skills\pesquisa-workflow"
-Copy-Item "$env:USERPROFILE\Documents\GitHub\comand-novo-projeto\.claude\commands\claude\novo-projeto.md" "$HOME\.claude\commands\claude\novo-projeto.md"
-Copy-Item "$env:USERPROFILE\Documents\GitHub\comand-novo-projeto\.claude\commands\claude\pesquisa.md" "$HOME\.claude\commands\claude\pesquisa.md"
+powershell -File "$env:USERPROFILE\Documents\GitHub\comand-novo-projeto\scripts\install-global.ps1"
 ```
+
+O script (`scripts/install-global.sh` / `.ps1`) copia, de dentro do clone
+para `~/.claude/`:
+
+- **Skills** (`.claude/skills/` → `~/.claude/skills/`): `git-workflow`,
+  `pesquisa-workflow`.
+- **Comandos** (`.claude/commands/claude/` → `~/.claude/commands/claude/`):
+  `novo-projeto.md`, `pesquisa.md`.
+
+Por padrão ele **não sobrescreve** o que já existir em `~/.claude/` — passe
+`--force` (bash) ou `-Force` (PowerShell) se quiser atualizar uma instalação
+anterior com as versões do clone. Ele é exatamente o que os comandos manuais
+abaixo fazem, só automatizado:
+
+<details>
+<summary>Equivalente manual (o que o script roda por baixo)</summary>
+
+```bash
+cp -r ~/Documents/GitHub/comand-novo-projeto/.claude/skills/git-workflow ~/.claude/skills/git-workflow
+cp -r ~/Documents/GitHub/comand-novo-projeto/.claude/skills/pesquisa-workflow ~/.claude/skills/pesquisa-workflow
+cp ~/Documents/GitHub/comand-novo-projeto/.claude/commands/claude/novo-projeto.md ~/.claude/commands/claude/novo-projeto.md
+cp ~/Documents/GitHub/comand-novo-projeto/.claude/commands/claude/pesquisa.md ~/.claude/commands/claude/pesquisa.md
+```
+
+</details>
 
 > As skills sozinhas (sem clonar o repositório) continuam funcionando
 > normalmente — nenhuma depende de `templates/`. É só o comando
