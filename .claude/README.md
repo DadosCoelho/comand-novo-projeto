@@ -22,6 +22,9 @@ pesquisas.
     │       └── boas-praticas-seguranca.md
     └── pesquisa-workflow/     # registro automático de pesquisas em pesquisa/
         └── SKILL.md
+scripts/
+├── install-global.ps1 / .sh    # instala skills+comandos em ~/.claude/
+└── arvore-de-commits.ps1 / .sh # gera .claude/arvore-de-commits.md
 templates/                     # os templates que /claude:novo-projeto copia
 ├── harness-lite/
 └── harness-full/
@@ -88,6 +91,27 @@ estão **empacotados neste repositório** — não é mais preciso ter uma pasta
 partir de `%USERPROFILE%\Documents\GitHub\comand-novo-projeto\templates\...`,
 então este repositório precisa estar clonado nesse caminho (ajuste `$repoRoot`
 no arquivo do comando se você clonar em outro lugar).
+
+### Árvore de commits ao vivo (`.claude/arvore-de-commits.md`)
+
+Diferente de [`pesquisa/11-arvore-de-commits.md`](../pesquisa/11-arvore-de-commits.md)
+(diagramas **conceituais** de branch/merge/rebase), este arquivo mostra o
+diagrama Mermaid `gitGraph` gerado a partir do **histórico real** deste
+repositório — commits, branches e merges de verdade, sempre atualizado.
+
+- Gerado por [`scripts/arvore-de-commits.sh`](../scripts/arvore-de-commits.sh) /
+  [`.ps1`](../scripts/arvore-de-commits.ps1) — rode manualmente a qualquer
+  momento para atualizar.
+- Neste projeto, o hook `Stop` (item 1 do `/claude:novo-projeto`, ver acima) já
+  chama esse script a cada resposta, então o arquivo se mantém sozinho. Sem o
+  hook, é só um gerador sob demanda.
+- O arquivo sempre fica **um commit atrasado**: ele não pode conter a hash do
+  commit que o atualiza, por definição (mesma limitação de qualquer changelog
+  autogerado).
+- Suporta histórico linear perfeitamente e branch+merge simples (uma branch
+  de cada vez, mesclada de volta) de forma correta; várias branches
+  concorrentes/aninhadas usam best-effort (branches ainda não mescladas são
+  anexadas ao final do diagrama).
 
 ## Instalar isso globalmente em outra máquina
 
