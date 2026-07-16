@@ -18,13 +18,23 @@ repository** and start coding.
 CLAUDE.md                 # project conventions + the 2 commands (fill in the notes)
 .gitignore                # sensible defaults
 .claude/
-└── commands/
-    └── claude/               # all user commands live here → /claude:<name>
-        ├── learning.md       # /claude:learning — record a lesson in ai-docs/lessons.md
-        └── manual-verify.md  # /claude:manual-verify — run a verification you describe
+├── README.md              # what's below, plus how to install it globally on another machine
+├── commands/
+│   └── claude/               # all user commands live here → /claude:<name>
+│       ├── learning.md       # /claude:learning — record a lesson in ai-docs/lessons.md
+│       ├── manual-verify.md  # /claude:manual-verify — run a verification you describe
+│       └── novo-projeto.md   # /claude:novo-projeto — scaffold a new project from a template
+└── skills/
+    └── git-workflow/          # practical Git knowledge + automatic local-versioning rules
 ai-docs/
 └── lessons.md            # running log of lessons (grown by /claude:learning)
+pesquisa/
+└── *.md                   # organized research notes on Git (concepts, commands, workflows...)
 ```
+
+> `commands/claude/novo-projeto.md` and `skills/git-workflow/` are extras on
+> top of the base `harness-lite` template — see [`.claude/README.md`](.claude/README.md)
+> for what they do and how to install them globally on another machine.
 
 ## After “Use this template”
 
