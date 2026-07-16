@@ -1,10 +1,11 @@
 # Árvore de commits
 
 > Gerado automaticamente a partir de `git log --graph` — não editar à mão.
-> Atualizado em: 2026-07-16 14:46:31
+> Atualizado em: 2026-07-16 14:46:51
 
 ```
-* 071f852 2026-07-16 chore: checkpoint automático (3 arquivo(s): .claude/README.md,scripts/install-global.ps1,scripts/install-global.sh) (HEAD -> main)
+* 07dd3db 2026-07-16 chore: checkpoint automático (3 arquivo(s): .claude/arvore-de-commits.md,scripts/arvore-de-commits.ps1,scripts/arvore-de-commits.sh) (HEAD -> main)
+* 071f852 2026-07-16 chore: checkpoint automático (3 arquivo(s): .claude/README.md,scripts/install-global.ps1,scripts/install-global.sh)
 * 962c7aa 2026-07-16 chore: checkpoint automático (11 arquivo(s): .claude/README.md,.claude/commands/claude/novo-projeto.md,.claude/commands/claude/pesquisa.md)
 * 420abd6 2026-07-16 fix: comando novo-projeto passa a usar os templates empacotados
 * 7eb606d 2026-07-16 chore: empacota os templates harness-lite e harness-full no repo
