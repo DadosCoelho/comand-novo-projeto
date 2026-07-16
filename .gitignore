@@ -1,0 +1,24 @@
+# macOS
+.DS_Store
+
+# Dependencies / build artefacts
+node_modules/
+dist/
+.turbo/
+.next/
+coverage/
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Landing page de divulgação — não faz parte do template distribuído
+site/
+
+# Claude Code session-local files (not portable across machines)
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
+
+# Playwright MCP runtime artefacts
+.playwright-mcp/
