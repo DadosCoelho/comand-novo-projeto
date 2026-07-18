@@ -38,10 +38,22 @@ These are the defaults every change should follow:
   pushing, opening PRs, sending email) unless told to proceed.
 - **Record lessons.** After any avoidable mistake, run `/claude:learning` so
   `ai-docs/lessons.md` grows into a living guide for this project.
+- **Keep "Project-specific notes" current.** Those fields start as
+  `{{placeholders}}` because nothing exists yet at scaffold time. The moment
+  each one becomes evident — first `package.json`/`requirements.txt`/
+  `pyproject.toml` committed, first framework/package manager chosen, first
+  working run/build/test command, a convention that would otherwise need
+  rediscovering — replace that placeholder yourself, without waiting to be
+  asked. Update it again if it changes later (e.g. package manager switched,
+  a new convention settles). Treat the section as a living doc you maintain
+  as you go, not a form the user fills in upfront.
 
 ## Project-specific notes
 
-> Fill this in once — it's the first context Claude reads each session.
+> Starts empty on purpose — filled in automatically as the project takes
+> shape (see "Keep Project-specific notes current" above). A remaining
+> `{{placeholder}}` just means that aspect hasn't been decided yet, not that
+> someone forgot to fill it in.
 
 - **Stack:** {{frameworks, language, key libraries}}
 - **Backend / database:** {{e.g. Firebase, Postgres, Supabase, none}}
