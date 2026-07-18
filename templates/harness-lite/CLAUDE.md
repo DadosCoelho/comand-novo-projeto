@@ -12,6 +12,7 @@ project, use the **`harness-full`** template instead.)
 | `/claude:learning [description]` | Records a lesson in `ai-docs/lessons.md` (date, context, root cause, how to avoid, tags). Use after any avoidable mistake. |
 | `/claude:manual-verify [request]` | Runs a free-form verification you describe — browser checks, CLI checks, etc. — and reports anything that needs human action. |
 | `/claude:pesquisa [topic]` | Researches a topic and records a structured note in `pesquisa/<slug>.md` (creates the folder + index on first run). |
+| `/claude:atualizar-notas [hint]` | Detects stack/backend/package manager/commands/conventions from the repo and syncs the "Project-specific notes" section below. On-demand trigger for the rule right below this table. |
 
 > **Convenção de comandos:** todos os comandos do usuário usam o namespace
 > `claude:` — ficam em `.claude/commands/claude/<nome>.md` e são chamados como
@@ -46,14 +47,15 @@ These are the defaults every change should follow:
   rediscovering — replace that placeholder yourself, without waiting to be
   asked. Update it again if it changes later (e.g. package manager switched,
   a new convention settles). Treat the section as a living doc you maintain
-  as you go, not a form the user fills in upfront.
+  as you go, not a form the user fills in upfront. Run
+  `/claude:atualizar-notas` to do this on demand instead of inline.
 
 ## Project-specific notes
 
 > Starts empty on purpose — filled in automatically as the project takes
-> shape (see "Keep Project-specific notes current" above). A remaining
-> `{{placeholder}}` just means that aspect hasn't been decided yet, not that
-> someone forgot to fill it in.
+> shape (see "Keep Project-specific notes current" above, or run
+> `/claude:atualizar-notas`). A remaining `{{placeholder}}` just means that
+> aspect hasn't been decided yet, not that someone forgot to fill it in.
 
 - **Stack:** {{frameworks, language, key libraries}}
 - **Backend / database:** {{e.g. Firebase, Postgres, Supabase, none}}

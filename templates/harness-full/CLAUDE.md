@@ -17,6 +17,7 @@ Minimal Claude Code template with a task-driven workflow:
 | `/claude:learning [description]` | Records a lesson learned in `ai-docs/lessons.md` (date, context, root cause, how to avoid, tags). Use after any avoidable mistake. |
 | `/claude:manual-verify [request]` | Runs a free-form verification you describe — browser checks via Playwright MCP, CLI checks, etc. — and reports anything that needs human action. |
 | `/claude:pesquisa [topic]` | Researches a topic and records a structured note in `pesquisa/<slug>.md` (creates the folder + index on first run). |
+| `/claude:atualizar-notas [hint]` | Detects stack/backend/package manager/commands/conventions from the repo and syncs the "Project-specific notes" section below. |
 
 > **Convenção de comandos:** todos os comandos do usuário usam o namespace
 > `claude:` — ficam em `.claude/commands/claude/<nome>.md` e são chamados como
@@ -54,7 +55,8 @@ ai-docs/
 │       ├── design.md                # /claude:design
 │       ├── learning.md              # /claude:learning
 │       ├── manual-verify.md         # /claude:manual-verify
-│       └── pesquisa.md              # /claude:pesquisa
+│       ├── pesquisa.md              # /claude:pesquisa
+│       └── atualizar-notas.md       # /claude:atualizar-notas
 ├── skills/
 │   └── skill-creator/               # the one bundled skill (meta — author more skills)
 └── settings.json                    # agent-teams env (add hooks here if you want any)
@@ -82,6 +84,9 @@ ai-docs/
 
 ### Lessons
 - Whenever you make an avoidable mistake, record it with `/claude:learning` so `ai-docs/lessons.md` grows into a living guide for the project.
+
+### Project-specific notes
+- The fields in "Project-specific notes" below start as `{{placeholders}}` because nothing exists yet when the template is adopted. The moment one becomes decidable (stack chosen, first working run command, a convention that settles) or drifts from what's on disk (e.g. package manager switched), update it yourself — don't wait to be asked. Run `/claude:atualizar-notas` to do this on demand instead of inline.
 
 ### Agent Teams
 - `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` is enabled. Both `task-master-generator` and `task-sequencer` are explicitly authorized to spawn ad-hoc specialist sub-agents (via the `Agent` tool, in parallel) when the work is independent and benefits from parallelism. They design the team they need on the fly.
@@ -124,8 +129,11 @@ For gitignored files you want copied into new worktrees (like `.env.local`), add
 
 ## Project-specific notes
 
-> Fill this in once you adopt the template — it is the first context every
-> `/claude:dev` run reads. Describe what an implementing agent must always know.
+> Filled in automatically as the project takes shape (see "Project-specific
+> notes" under Invariant rules above, or run `/claude:atualizar-notas`) — it
+> is the first context every `/claude:dev` run reads. A remaining
+> `{{placeholder}}` means that aspect hasn't been decided yet, not that
+> someone forgot to fill it in.
 
 - **Stack:** {{frameworks, language, key libraries}}
 - **Backend / database:** {{e.g. Convex, Postgres + Prisma, Supabase}}
