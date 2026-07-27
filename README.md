@@ -19,16 +19,16 @@ encontrar o repositório):
 
 ```bash
 git clone https://github.com/DadosCoelho/comand-novo-projeto.git \
-  ~/Documents/GitHub/comand-novo-projeto
-bash ~/Documents/GitHub/comand-novo-projeto/.claude/scripts/install-global.sh
+  ~/Documents/Projetos/comand-novo-projeto
+bash ~/Documents/Projetos/comand-novo-projeto/.claude/scripts/install-global.sh
 ```
 
 No Windows/PowerShell:
 
 ```powershell
 git clone https://github.com/DadosCoelho/comand-novo-projeto.git `
-  "$env:USERPROFILE\Documents\GitHub\comand-novo-projeto"
-powershell -File "$env:USERPROFILE\Documents\GitHub\comand-novo-projeto\.claude\scripts\install-global.ps1"
+  "$env:USERPROFILE\Documents\Projetos\comand-novo-projeto"
+powershell -File "$env:USERPROFILE\Documents\Projetos\comand-novo-projeto\.claude\scripts\install-global.ps1"
 ```
 
 O `install-global` copia as skills (`git-workflow`, `pesquisa-workflow`) e os
@@ -46,7 +46,7 @@ Depois de instalado, dentro de qualquer sessão do Claude Code:
 /claude:novo-projeto full <nome-do-projeto>   # scaffold com PRD -> tasks -> dev
 ```
 
-Isso cria `%USERPROFILE%\Documents\GitHub\<nome-do-projeto>` com um
+Isso cria `%USERPROFILE%\Documents\Projetos\<nome-do-projeto>` com um
 repositório Git novo e limpo (sem o histórico deste repo), a partir do
 template escolhido — e pergunta se você quer habilitar, só naquele projeto,
 o checkpoint automático de commits e o registro automático de pesquisas.
@@ -95,7 +95,7 @@ templates/                  # os dois templates que /claude:novo-projeto copia
 
 | Comando | O que faz |
 |---|---|
-| `/claude:novo-projeto lite\|full <nome>` | Cria um projeto novo em `~/Documents/GitHub/<nome>` a partir de um template, com repositório Git limpo. |
+| `/claude:novo-projeto lite\|full <nome>` | Cria um projeto novo em `~/Documents/Projetos/<nome>` a partir de um template, com repositório Git limpo. |
 | `/claude:pesquisa [tema]` | Pesquisa um tema e registra uma nota em `pesquisa/<slug>.md`, atualizando o índice. Primeira execução cria a pasta. |
 | `/claude:learning [descrição]` | Registra uma lição em `ai-docs/lessons.md`. |
 | `/claude:manual-verify [pedido]` | Roda uma verificação livre que você descrever e relata o que precisa de ação humana. |

@@ -1,5 +1,5 @@
 ---
-description: Cria um projeto novo na pasta GitHub a partir de um template harness (lite ou full).
+description: Cria um projeto novo na pasta Projetos a partir de um template harness (lite ou full).
 argument-hint: lite|full <nome-do-projeto>
 allowed-tools: Bash, Read, Glob, Write, AskUserQuestion
 ---
@@ -8,7 +8,7 @@ allowed-tools: Bash, Read, Glob, Write, AskUserQuestion
 
 Crie um projeto novo copiando um dos templates empacotados neste próprio
 repositório (`templates/harness-lite`, `templates/harness-full`) para a
-pasta `GitHub`, sem arrastar histórico git nenhum (cada projeto nasce com
+pasta `Projetos`, sem arrastar histórico git nenhum (cada projeto nasce com
 seu próprio repositório limpo).
 
 ## Argumentos
@@ -19,11 +19,11 @@ seu próprio repositório limpo).
   - `lite` → `<comand-novo-projeto>\templates\harness-lite`
   - `full` → `<comand-novo-projeto>\templates\harness-full`
 - **nome-do-projeto**: o nome da pasta a criar dentro de
-  `%USERPROFILE%\Documents\GitHub\`.
+  `%USERPROFILE%\Documents\Projetos\`.
 
 > **Pré-requisito:** este comando lê os templates de dentro do repositório
 > `comand-novo-projeto` (o mesmo que contém este arquivo), esperado em
-> `%USERPROFILE%\Documents\GitHub\comand-novo-projeto\`. Se você clonou
+> `%USERPROFILE%\Documents\Projetos\comand-novo-projeto\`. Se você clonou
 > esse repositório em outro lugar, ajuste `$repoRoot` no passo 2 abaixo.
 
 ## Passos
@@ -32,7 +32,7 @@ seu próprio repositório limpo).
    - Se faltar algum, ou se `<template>` não for `lite`/`full`, **pare** e
      mostre o uso: `/claude:novo-projeto lite|full <nome-do-projeto>`.
    - Resolva o caminho de origem (`harness-lite` ou `harness-full` dentro de
-     `templates/`) e o destino `%USERPROFILE%\Documents\GitHub\<nome>`.
+     `templates/`) e o destino `%USERPROFILE%\Documents\Projetos\<nome>`.
    - Se o destino **já existir**, pare e avise — nunca sobrescreva uma pasta
      existente.
 
@@ -41,9 +41,9 @@ seu próprio repositório limpo).
    direta — sem exclusão nem limpeza extra:
 
    ```powershell
-   $repoRoot = "$env:USERPROFILE\Documents\GitHub\comand-novo-projeto"
+   $repoRoot = "$env:USERPROFILE\Documents\Projetos\comand-novo-projeto"
    $src  = "$repoRoot\templates\harness-<TEMPLATE>"
-   $dest = "$env:USERPROFILE\Documents\GitHub\<NOME>"
+   $dest = "$env:USERPROFILE\Documents\Projetos\<NOME>"
    if (-not (Test-Path $src)) { throw "Template nao encontrado em $src — confirme que comand-novo-projeto esta clonado em $repoRoot (ou ajuste `$repoRoot` neste comando)." }
    if (Test-Path $dest) { throw "Destino já existe: $dest" }
    New-Item -ItemType Directory -Path $dest | Out-Null
