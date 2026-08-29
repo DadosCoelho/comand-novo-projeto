@@ -3,6 +3,28 @@
 > Trabalho decidido e ainda não feito. Uma linha por item, com o **porquê** —
 > pendência sem motivo registrado vira pendência que ninguém sabe se ainda vale.
 
+## 🔴 `/claude:novo-projeto` global está quebrado agora (achado em 29/08/2026)
+
+A cópia global (`~/.claude/commands/claude/novo-projeto.md`, linha 51) aponta
+para o caminho antigo:
+
+```powershell
+$repoRoot = "$env:USERPROFILE\Documents\Projetos\comand-novo-projeto"
+```
+
+O repositório foi movido para `Documents\Projetos\Ferramentas\comand-novo-projeto`.
+**Rodar o comando hoje falha** com "Template nao encontrado".
+
+A cópia **deste** repo já tem a correção, mas ela está no working tree **sem
+commit** (junto de ajustes de caminho no `README.md` e no `.claude/README.md`).
+Ou seja: a correção existe, só não chegou nem ao git nem à cópia global.
+
+- [ ] Commitar as correções de caminho pendentes neste repo.
+- [ ] Propagar a linha 51 para a cópia global.
+
+Achado por acidente ao procurar este repositório para sincronizar a skill — o
+`find` inicial não o encontrou onde o comando dizia que ele estaria.
+
 ## Sincronizar a skill `plano-em-blocos` (decidido em 29/08/2026)
 
 A skill global `plano-em-blocos` foi criada em `~/.claude/skills/` e o comando
