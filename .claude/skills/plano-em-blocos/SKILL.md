@@ -199,6 +199,34 @@ extraia direto.
 Isso é **rede de segurança, não substituto**: só recupera o que foi digitado. Se
 o `/usage` nunca foi rodado num bloco, não há nada lá.
 
+### Duas armadilhas na aritmética, aprendidas ao validar o script
+
+**1. Na virada, o que sobrava da janela antiga não foi consumido — expirou.** A
+janela é de 5 h de relógio: quem estava em 74% quando ela virou não gastou os
+26 restantes. Somar `(100 − anterior) + seguinte` conta ociosidade como
+trabalho.
+
+**2. Sessão que atravessou a virada fica fora da régua.** Os pontos dela são
+cota inferior, então dividir linhas por eles infla a razão — e infla mais
+quanto mais cedo a janela virou. Num projeto real isso chegou a **inverter a
+régua**: 109 linhas/ponto a frio contra 77 a quente, o oposto do que oito
+medições mostravam.
+
+> Um dado ruim que entra sempre no mesmo lado da comparação não vira ruído,
+> vira **viés** — e viés não se detecta olhando a dispersão. O que o detectou
+> foi a conclusão sair contrária às medições anteriores.
+
+### A régua mede implementação, não desenho
+
+Um trecho de trabalho que foi **conversa de desenho** consome orçamento e quase
+não produz linha. Medido pela régua de implementação, dá um número alarmante e
+sem sentido — 10 linhas por ponto contra os 85 esperados, sem nada estar
+errado.
+
+Ao registrar, **diga qual dos dois foi**. Blocos de desenho entram no
+`medicoes.md` com o custo anotado e a razão em branco; misturá-los com os de
+implementação estraga a régua para os dois.
+
 ## Formato dos arquivos
 
 ### `ai-docs/plano/plano.md`
