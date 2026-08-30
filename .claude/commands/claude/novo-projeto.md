@@ -102,7 +102,57 @@ seu próprio repositório limpo).
      disponíveis para rodar sob demanda (`.claude/arvore-de-commits.md` só
      é criado/atualizado quando alguém chama o script).
 
-5. **Perguntar sobre registro automático de pesquisas.** Use
+5. **Perguntar sobre o RTK (compressão da saída de comandos).** Só faça esta
+   pergunta se o `rtk` estiver instalado — confira com
+   `Get-Command rtk -ErrorAction SilentlyContinue`. Sem o binário no PATH o
+   hook chamaria um executável inexistente a cada comando; nesse caso **pule
+   o passo em silêncio** e apague `$dest\.rtk\`.
+
+   O RTK é um proxy de CLI: roda o comando de verdade e comprime a saída
+   antes de ela entrar no contexto (filtra, agrupa, deduplica). Use
+   `AskUserQuestion` — "Quer habilitar o RTK (compressão da saída de
+   comandos) neste projeto?", opções "Sim, habilitar" / "Não, obrigado".
+
+   - Se **sim**, **mescle** este bloco em `$dest\.claude\settings.local.json`.
+     Mesclar, não sobrescrever: o arquivo pode já ter o hook `Stop` do passo
+     4, e escrever por cima apagaria o auto-commit.
+
+     ```json
+     {
+       "hooks": {
+         "PreToolUse": [
+           {
+             "matcher": "Bash",
+             "hooks": [
+               { "type": "command", "command": "rtk hook claude" }
+             ]
+           }
+         ]
+       }
+     }
+     ```
+
+     **Nunca rode `rtk init -g`** — ele instala o hook em
+     `~/.claude/settings.json` e passa a valer para todos os projetos, que é
+     o oposto do que este passo faz. (`rtk init` sem `-g` também não serve:
+     não instala hook nenhum, só escreve instruções no `CLAUDE.md`.)
+
+     O `.rtk/config.toml` já vem no template, **versionado**, com a lista de
+     exclusões e o princípio para mantê-la: exclua todo comando cuja saída é
+     o produto, não o meio.
+   - Se **não**, apague `$dest\.rtk\` — sem o hook ele é só ruído.
+
+   > **Avise sobre a régua se o passo 7 também for habilitado.** O RTK
+   > derruba o consumo de pontos e portanto muda o N da régua de orçamento.
+   > Os 85/65 emprestados foram medidos **sem** ele, então vão
+   > **superestimar** o custo dos primeiros blocos — que é o lado seguro do
+   > erro, e a régua converge para a deste projeto a cada bloco. Isso só vale
+   > enquanto o RTK ficar estável: mexer no `.rtk/config.toml` no meio do
+   > projeto cria uma descontinuidade na série. Se mexer, anote a data em
+   > `medicoes.md`. O `medicoes.py` lê transcrição e `git log` — ele não tem
+   > como saber se o RTK estava ligado.
+
+6. **Perguntar sobre registro automático de pesquisas.** Use
    `AskUserQuestion` para perguntar se o usuário quer habilitar, neste
    projeto, o registro automático de pesquisas: sempre que eu concluir uma
    investigação não trivial (múltiplas buscas/leituras sobre um tema), salvo
@@ -131,7 +181,7 @@ seu próprio repositório limpo).
      ativa o registro automático a partir daí (não precisa perguntar de
      novo).
 
-6. **Perguntar sobre plano em blocos medidos.** Use `AskUserQuestion` para
+7. **Perguntar sobre plano em blocos medidos.** Use `AskUserQuestion` para
    perguntar se o usuário quer habilitar, neste projeto, o planejamento em
    blocos com orçamento de sessão: quando o trabalho não couber numa sessão,
    eu recorto em blocos que terminam verdes, agrupo em janelas por contexto
@@ -159,7 +209,7 @@ seu próprio repositório limpo).
      disponível e, se usado manualmente depois, cria a pasta e ativa o
      comportamento automático a partir daí.
 
-7. **Relatar.** Mostre ao usuário:
+8. **Relatar.** Mostre ao usuário:
    - O caminho do projeto criado.
    - Confirmação de que é um repo git novo (sem o histórico do template).
    - **Próximos passos por template:**
@@ -173,12 +223,18 @@ seu próprio repositório limpo).
      entra em vigor na próxima sessão do Claude Code aberta nesse projeto, e
      que a partir daí `.claude/arvore-de-commits.md` também passa a ser
      mantido sozinho.
-   - Se o registro de pesquisas foi habilitado no passo 5, avise que a
+   - Se o RTK foi habilitado no passo 5, avise que ele também só entra em
+     vigor na próxima sessão do Claude Code aberta nesse projeto, que dá
+     para conferir com `rtk gain` depois de alguns comandos, e que o
+     `rtk gain` estima `bytes ÷ 4` sobre o que ele tocou — é o teto do
+     efeito possível, não o efeito no consumo da sessão. Quem decide isso é
+     o `/usage`.
+   - Se o registro de pesquisas foi habilitado no passo 6, avise que a
      skill `pesquisa-workflow` precisa estar instalada globalmente
      (`~/.claude/skills/pesquisa-workflow/`) para o registro automático
      funcionar — sem ela, só o comando `/claude:pesquisa` (rodado à mão)
      funciona.
-   - Se o plano em blocos foi habilitado no passo 6, avise o mesmo sobre a
+   - Se o plano em blocos foi habilitado no passo 7, avise o mesmo sobre a
      skill `plano-em-blocos` (`~/.claude/skills/plano-em-blocos/`), e que a
      primeira leitura de `/usage` é pedida no começo do primeiro bloco.
 
@@ -192,8 +248,8 @@ seu próprio repositório limpo).
 - As skills e MCPs do usuário são **globais** (`~/.claude/`), então o projeto
   novo já nasce com elas — inclusive a skill `git-workflow`, que já cobre
   branch por tarefa e commit por tarefa concluída por padrão. O hook do
-  passo 4, a pasta `pesquisa/` do passo 5 e a pasta `ai-docs/plano/` do
-  passo 6 são extras opt-in por projeto.
+  passo 4, o RTK do passo 5, a pasta `pesquisa/` do passo 6 e a pasta
+  `ai-docs/plano/` do passo 7 são extras opt-in por projeto.
 - **Nada de conteúdo de projeto vai para `.claude/`.** Ali moram comandos,
   skills, scripts e settings — *como* eu trabalho. O que eu produzo **sobre**
   o trabalho (lições, plano, medições) vai para `ai-docs/`; o produto e suas

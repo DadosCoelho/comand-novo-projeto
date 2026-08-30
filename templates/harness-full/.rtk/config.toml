@@ -1,0 +1,30 @@
+# RTK — comprime a saída dos comandos antes de ela entrar no contexto.
+#
+# Este arquivo é VERSIONADO de propósito. O hook mora em
+# `.claude/settings.local.json`, que é ignorado pelo git; então este é o
+# único registro de que o RTK estava ligado neste projeto, e desde quando
+# (`git log -- .rtk/config.toml`). Quem for medir o custo do projeto depois
+# precisa dessa data: o RTK muda o denominador da régua de orçamento.
+#
+# PRINCÍPIO PARA MANTER A LISTA ABAIXO:
+# exclua todo comando cuja saída é o PRODUTO, não o meio.
+# Comprimir `git log` é ganho puro. Comprimir a tabela de uma medição, o
+# resultado de uma consulta ou a saída de um benchmark apaga exatamente o
+# dado que motivou rodar o comando — e apaga em silêncio.
+#
+# A exclusão casa por prefixo, subcomando incluído: "pnpm calibrar" exclui
+# só esse script e mantém "pnpm list" comprimido.
+#
+# Escapes pontuais, sem mexer aqui:
+#   rtk proxy <cmd>     roda um comando sem filtro nenhum
+#   RTK_DISABLED=1      desliga para uma invocação só
+
+[hooks]
+exclude_commands = [
+  "curl",
+  "git rebase",
+]
+
+[tee]
+enabled = true
+mode = "failures"   # guarda a saída crua em disco quando o comando falha
