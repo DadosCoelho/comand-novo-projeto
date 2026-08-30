@@ -49,7 +49,8 @@ Depois de instalado, dentro de qualquer sessão do Claude Code:
 Isso cria `%USERPROFILE%\Documents\Projetos\<nome-do-projeto>` com um
 repositório Git novo e limpo (sem o histórico deste repo), a partir do
 template escolhido — e pergunta se você quer habilitar, só naquele projeto,
-o checkpoint automático de commits e o registro automático de pesquisas.
+o checkpoint automático de commits, o RTK (compressão da saída de
+comandos) e o registro automático de pesquisas.
 
 ## O que tem aqui
 
