@@ -285,6 +285,20 @@ e a linha precisa dizer que virou.
 - **Não decide sozinha o que é um bloco** — propõe o recorte, o usuário ajusta.
 - **Não serve para tarefa curta.** Numa coisa que cabe numa sessão, é overhead.
 
+## Referência
+
+Detalhe do que está resumido acima, para consultar quando algo não bater:
+
+- [`reference/regua-de-orcamento.md`](reference/regua-de-orcamento.md) — o
+  método: as duas cotas, a aritmética dos pontos (e os três erros já cometidos
+  nela), como estimar por pontos de contato, como empacotar janelas, e como
+  recuperar medição das transcrições.
+- [`reference/formato-do-plano.md`](reference/formato-do-plano.md) — os dois
+  arquivos campo a campo, com exemplos preenchidos de um projeto real e o que
+  nunca escrever neles.
+- `scripts/medicoes.py` — lê as transcrições e o `git log` e imprime a régua do
+  projeto. Rode-o ao adotar a skill num projeto que já tem história.
+
 ## Relacionado
 
 - `git-workflow` — o commit que fecha cada bloco verde.

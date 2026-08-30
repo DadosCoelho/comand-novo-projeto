@@ -61,10 +61,9 @@ o plano costuma ser o documento mais consultado depois da especificação, e
 tampouco: no projeto Cadin, as notas de pesquisa são citadas **31 vezes por 13
 dos 24 documentos** da especificação — são fonte, não subproduto.
 
-## Fora deste repositório (para a mesma sessão)
+## ✅ Peças que faltavam — todas feitas
 
-Peças da skill que ficaram para a janela seguinte, e que **não** dependem
-deste repo:
+Ficaram para depois do primeiro corte e foram fechadas na mesma sessão:
 
 - [x] `scripts/medicoes.py` — feito e **validado contra um projeto com 13
       blocos e 20 leituras**: reproduziu sozinho 88 linhas/ponto a quente e 67 a
@@ -73,8 +72,11 @@ deste repo:
 - [ ] `reference/regua-de-orcamento.md` e `reference/formato-do-plano.md`.
 - [x] **Validar contra o Cadin** — feito, e o teste **achou dois defeitos** que
       um projeto vazio nunca teria mostrado (ver abaixo).
-- [ ] `reference/regua-de-orcamento.md` e `reference/formato-do-plano.md` — o
-      `SKILL.md` já carrega o essencial; estas são detalhamento.
+- [x] `reference/regua-de-orcamento.md` e `reference/formato-do-plano.md` —
+      feitos. O primeiro traz o método (as duas cotas, a aritmética dos pontos e
+      os três erros já cometidos nela, estimativa por pontos de contato,
+      empacotamento de janelas); o segundo, os dois arquivos campo a campo com
+      exemplos de um projeto real.
 
 ## O que a validação contra um projeto real achou
 
