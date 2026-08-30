@@ -89,6 +89,9 @@ ai-docs/
 ### Project-specific notes
 - The fields in "Project-specific notes" below start as `{{placeholders}}` because nothing exists yet when the template is adopted. The moment one becomes decidable (stack chosen, first working run command, a convention that settles) or drifts from what's on disk (e.g. package manager switched), update it yourself — don't wait to be asked. Run `/claude:atualizar-notas` to do this on demand instead of inline.
 
+### RTK
+- Only applies if this project has a `.rtk/config.toml` — its presence means the RTK hook is enabled here, compressing command output before it reaches the context. That is pure gain for `git log` or `tsc`, and a loss when the output **is** the product. The moment a command's output becomes something read for its data (a measurement script, a query, a benchmark — anything whose numbers drive a decision), add it to `exclude_commands` yourself, without waiting to be asked. Exclusion matches by prefix, subcommand included: `"pnpm bench"` leaves `pnpm list` compressed. Like the notes above, this is a living doc: what to exclude is not knowable at scaffold time, it emerges. If this project also uses `ai-docs/plano/`, note the date of any change there — RTK moves the budget ruler's denominator, and `medicoes.py` cannot see it.
+
 ### Agent Teams
 - `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` is enabled. Both `task-master-generator` and `task-sequencer` are explicitly authorized to spawn ad-hoc specialist sub-agents (via the `Agent` tool, in parallel) when the work is independent and benefits from parallelism. They design the team they need on the fly.
 

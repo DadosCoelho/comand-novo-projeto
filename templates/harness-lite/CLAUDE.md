@@ -50,6 +50,18 @@ These are the defaults every change should follow:
   a new convention settles). Treat the section as a living doc you maintain
   as you go, not a form the user fills in upfront. Run
   `/claude:atualizar-notas` to do this on demand instead of inline.
+- **Keep `.rtk/config.toml` current** — only if this project has one; its
+  presence means the RTK hook is enabled here, compressing command output
+  before it reaches the context. That is pure gain for `git log` or `tsc`, and
+  a loss when the output **is** the product. So the moment a command's output
+  becomes something read for its data — a measurement script, a query, a
+  benchmark, anything whose numbers drive a decision — add it to
+  `exclude_commands` yourself, without waiting to be asked. Exclusion matches
+  by prefix, subcommand included: `"pnpm bench"` leaves `pnpm list`
+  compressed. Same living-doc rule as the notes above, and for the same
+  reason: what to exclude is not knowable at scaffold time, it emerges. If
+  this project also uses `ai-docs/plano/`, note the date of any change there —
+  RTK moves the budget ruler's denominator, and `medicoes.py` cannot see it.
 
 ## Project-specific notes
 
