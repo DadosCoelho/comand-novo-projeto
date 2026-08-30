@@ -23,7 +23,7 @@ seu próprio repositório limpo).
 
 > **Pré-requisito:** este comando lê os templates de dentro do repositório
 > `comand-novo-projeto` (o mesmo que contém este arquivo), esperado em
-> `%USERPROFILE%\Documents\Projetos\comand-novo-projeto\`. Se você clonou
+> `%USERPROFILE%\Documents\Projetos\Ferramentas\comand-novo-projeto\`. Se você clonou
 > esse repositório em outro lugar, ajuste `$repoRoot` no passo 2 abaixo.
 
 ## Passos
@@ -41,7 +41,7 @@ seu próprio repositório limpo).
    direta — sem exclusão nem limpeza extra:
 
    ```powershell
-   $repoRoot = "$env:USERPROFILE\Documents\Projetos\comand-novo-projeto"
+   $repoRoot = "$env:USERPROFILE\Documents\Projetos\Ferramentas\comand-novo-projeto"
    $src  = "$repoRoot\templates\harness-<TEMPLATE>"
    $dest = "$env:USERPROFILE\Documents\Projetos\<NOME>"
    if (-not (Test-Path $src)) { throw "Template nao encontrado em $src — confirme que comand-novo-projeto esta clonado em $repoRoot (ou ajuste `$repoRoot` neste comando)." }

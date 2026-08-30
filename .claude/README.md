@@ -91,7 +91,7 @@ de cada resposta (nunca push/pull, só commit local) e (2) a pasta
 Os templates que ele copia (`templates/harness-lite`, `templates/harness-full`)
 estão **empacotados neste repositório** — não é mais preciso ter uma pasta
 `harness-templates` separada. A única exigência: o comando lê os templates a
-partir de `%USERPROFILE%\Documents\Projetos\comand-novo-projeto\templates\...`,
+partir de `%USERPROFILE%\Documents\Projetos\Ferramentas\comand-novo-projeto\templates\...`,
 então este repositório precisa estar clonado nesse caminho (ajuste `$repoRoot`
 no arquivo do comando se você clonar em outro lugar).
 
@@ -130,16 +130,16 @@ de instalação:
 
 ```bash
 git clone https://github.com/DadosCoelho/comand-novo-projeto.git \
-  ~/Documents/Projetos/comand-novo-projeto
-bash ~/Documents/Projetos/comand-novo-projeto/.claude/scripts/install-global.sh
+  ~/Documents/Projetos/Ferramentas/comand-novo-projeto
+bash ~/Documents/Projetos/Ferramentas/comand-novo-projeto/.claude/scripts/install-global.sh
 ```
 
 No Windows/PowerShell:
 
 ```powershell
 git clone https://github.com/DadosCoelho/comand-novo-projeto.git `
-  "$env:USERPROFILE\Documents\Projetos\comand-novo-projeto"
-powershell -File "$env:USERPROFILE\Documents\Projetos\comand-novo-projeto\.claude\scripts\install-global.ps1"
+  "$env:USERPROFILE\Documents\Projetos\Ferramentas\comand-novo-projeto"
+powershell -File "$env:USERPROFILE\Documents\Projetos\Ferramentas\comand-novo-projeto\.claude\scripts\install-global.ps1"
 ```
 
 O script (`.claude/scripts/install-global.sh` / `.ps1`) copia, de dentro do clone
@@ -159,10 +159,10 @@ abaixo fazem, só automatizado:
 <summary>Equivalente manual (o que o script roda por baixo)</summary>
 
 ```bash
-cp -r ~/Documents/Projetos/comand-novo-projeto/.claude/skills/git-workflow ~/.claude/skills/git-workflow
-cp -r ~/Documents/Projetos/comand-novo-projeto/.claude/skills/pesquisa-workflow ~/.claude/skills/pesquisa-workflow
-cp ~/Documents/Projetos/comand-novo-projeto/.claude/commands/claude/novo-projeto.md ~/.claude/commands/claude/novo-projeto.md
-cp ~/Documents/Projetos/comand-novo-projeto/.claude/commands/claude/pesquisa.md ~/.claude/commands/claude/pesquisa.md
+cp -r ~/Documents/Projetos/Ferramentas/comand-novo-projeto/.claude/skills/git-workflow ~/.claude/skills/git-workflow
+cp -r ~/Documents/Projetos/Ferramentas/comand-novo-projeto/.claude/skills/pesquisa-workflow ~/.claude/skills/pesquisa-workflow
+cp ~/Documents/Projetos/Ferramentas/comand-novo-projeto/.claude/commands/claude/novo-projeto.md ~/.claude/commands/claude/novo-projeto.md
+cp ~/Documents/Projetos/Ferramentas/comand-novo-projeto/.claude/commands/claude/pesquisa.md ~/.claude/commands/claude/pesquisa.md
 ```
 
 </details>

@@ -19,16 +19,16 @@ encontrar o repositório):
 
 ```bash
 git clone https://github.com/DadosCoelho/comand-novo-projeto.git \
-  ~/Documents/Projetos/comand-novo-projeto
-bash ~/Documents/Projetos/comand-novo-projeto/.claude/scripts/install-global.sh
+  ~/Documents/Projetos/Ferramentas/comand-novo-projeto
+bash ~/Documents/Projetos/Ferramentas/comand-novo-projeto/.claude/scripts/install-global.sh
 ```
 
 No Windows/PowerShell:
 
 ```powershell
 git clone https://github.com/DadosCoelho/comand-novo-projeto.git `
-  "$env:USERPROFILE\Documents\Projetos\comand-novo-projeto"
-powershell -File "$env:USERPROFILE\Documents\Projetos\comand-novo-projeto\.claude\scripts\install-global.ps1"
+  "$env:USERPROFILE\Documents\Projetos\Ferramentas\comand-novo-projeto"
+powershell -File "$env:USERPROFILE\Documents\Projetos\Ferramentas\comand-novo-projeto\.claude\scripts\install-global.ps1"
 ```
 
 O `install-global` copia as skills (`git-workflow`, `pesquisa-workflow`) e os
