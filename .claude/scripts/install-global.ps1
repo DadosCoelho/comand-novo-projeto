@@ -14,8 +14,8 @@ param(
 $repoRoot   = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
 $claudeHome = Join-Path $HOME ".claude"
 
-$skills = @("git-workflow", "pesquisa-workflow")
-$commands = @("novo-projeto.md", "pesquisa.md")
+$skills = @("git-workflow", "pesquisa-workflow", "plano-em-blocos")
+$commands = @("novo-projeto.md", "pesquisa.md", "plano.md")
 
 Write-Host "Instalando globalmente a partir de: $repoRoot"
 Write-Host "Destino (~/.claude): $claudeHome"

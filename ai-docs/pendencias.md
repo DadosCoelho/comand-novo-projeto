@@ -3,34 +3,12 @@
 > Trabalho decidido e ainda não feito. Uma linha por item, com o **porquê** —
 > pendência sem motivo registrado vira pendência que ninguém sabe se ainda vale.
 
-## 🔴 `/claude:novo-projeto` global está quebrado agora (achado em 29/08/2026)
-
-A cópia global (`~/.claude/commands/claude/novo-projeto.md`, linha 51) aponta
-para o caminho antigo:
-
-```powershell
-$repoRoot = "$env:USERPROFILE\Documents\Projetos\comand-novo-projeto"
-```
-
-O repositório foi movido para `Documents\Projetos\Ferramentas\comand-novo-projeto`.
-**Rodar o comando hoje falha** com "Template nao encontrado".
-
-A cópia **deste** repo já tem a correção, mas ela está no working tree **sem
-commit** (junto de ajustes de caminho no `README.md` e no `.claude/README.md`).
-Ou seja: a correção existe, só não chegou nem ao git nem à cópia global.
-
-- [ ] Commitar as correções de caminho pendentes neste repo.
-- [ ] Propagar a linha 51 para a cópia global.
-
-Achado por acidente ao procurar este repositório para sincronizar a skill — o
-`find` inicial não o encontrou onde o comando dizia que ele estaria.
-
-## Sincronizar a skill `plano-em-blocos` (decidido em 29/08/2026)
+## ✅ Sincronizar a skill `plano-em-blocos` (feito em 29/08/2026)
 
 A skill global `plano-em-blocos` foi criada em `~/.claude/skills/` e o comando
 `/claude:plano` em `~/.claude/commands/claude/`. O `/claude:novo-projeto` global
-já foi editado (passo 6 novo). **Falta trazer tudo para este repositório**, que
-é a fonte da verdade dos comandos e dos templates.
+já foi editado (passo 6 novo). Tudo foi trazido para este repositório, que é a
+fonte da verdade dos comandos e dos templates, e registrado no `install-global`.
 
 ### O que a skill faz
 
@@ -45,24 +23,27 @@ existir.
 
 ### Itens
 
-- [ ] **Copiar `/claude:plano`** para `.claude/commands/claude/plano.md` deste
+- [x] **Copiar `/claude:plano`** para `.claude/commands/claude/plano.md` deste
       repo (a cópia canônica) e para os dois templates
       (`templates/harness-{lite,full}/.claude/commands/claude/`).
-- [ ] **Sincronizar `novo-projeto.md`** — a cópia deste repo está defasada em
+- [x] **Sincronizar `novo-projeto.md`** — a cópia deste repo está defasada em
       relação à global. As mudanças foram: passo 6 novo (pergunta sobre plano
       em blocos), renumeração do antigo passo 6 para 7, `/claude:plano` na
       lista de comandos do `lite`, aviso sobre a skill global no relatório, e
       uma regra nova na seção "Regras".
-- [ ] **Acrescentar a linha na tabela de comandos** do `CLAUDE.md` dos dois
+- [x] **Acrescentar a linha na tabela de comandos** do `CLAUDE.md` dos dois
       templates:
 
       | `/claude:plano [o que construir]` | Planeja trabalho longo em blocos medidos em `ai-docs/plano/`, com orçamento de sessão (cria a pasta na primeira execução). |
 
-- [ ] **Decidir se o `harness-lite` deve embarcar o comando.** O `lite` é para
-      projetos rápidos e pequenos, onde a skill é overhead assumido. Duas
-      leituras defensáveis: (a) embarcar mesmo assim, porque um projeto pequeno
-      às vezes cresce; (b) só no `full`, mantendo o `lite` enxuto. **Não
-      resolvido** — decidir com o usuário antes de copiar.
+- [x] **Decidir se o `harness-lite` deve embarcar o comando.** **Sim, nos dois.**
+      O argumento que decidiu não foi "projeto pequeno às vezes cresce" — foi que
+      **o custo de embarcar é zero**: comando e skill são opt-in por pasta, e sem
+      `ai-docs/plano/` nenhum dos dois faz nada. Deixar de fora só criaria o caso
+      em que o projeto cresce e o comando não está lá.
+- [x] **Registrar no `install-global`** (`.sh` e `.ps1`) — era o item que faltava
+      na lista original: o repo é a fonte, mas quem propaga para `~/.claude/` é
+      esse script, e uma skill fora dele nunca chega na máquina de ninguém.
 
 ### A regra nova das "Regras" do `novo-projeto`
 

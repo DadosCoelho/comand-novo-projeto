@@ -131,13 +131,41 @@ seu próprio repositório limpo).
      ativa o registro automático a partir daí (não precisa perguntar de
      novo).
 
-6. **Relatar.** Mostre ao usuário:
+6. **Perguntar sobre plano em blocos medidos.** Use `AskUserQuestion` para
+   perguntar se o usuário quer habilitar, neste projeto, o planejamento em
+   blocos com orçamento de sessão: quando o trabalho não couber numa sessão,
+   eu recorto em blocos que terminam verdes, agrupo em janelas por contexto
+   compartilhado, peço `/usage` nas duas pontas de cada bloco e `/clear` só
+   quando a troca de contexto justifica — mantendo uma régua que melhora a
+   cada bloco medido. Isso é feito pela skill global `plano-em-blocos`; o
+   comando `/claude:plano` entra junto e serve tanto para criar o plano
+   quanto para habilitar isso depois manualmente.
+
+   **Só faça esta pergunta se o projeto tiver cara de trabalho longo** —
+   template `full`, ou o usuário descrevendo várias entregas. Num projeto
+   pequeno a skill é overhead, e perguntar já sugere que ela é necessária.
+
+   - Pergunta: "Quer habilitar plano em blocos medidos (`ai-docs/plano/`)
+     neste projeto?" com opções "Sim, habilitar" / "Não, obrigado".
+   - Se **sim**, crie `$desti-docs\plano\plano.md` e
+     `$desti-docs\plano\medicoes.md` nos formatos declarados na skill
+     `plano-em-blocos`, com os blocos ainda vazios e a régua no ponto de
+     partida (85 quente / 65 frio), marcada como **ponto de partida
+     emprestado, a ser substituído pela régua deste projeto**.
+
+     A pasta `ai-docs/plano/` é **versionada** — é conteúdo de projeto, não
+     configuração de ferramenta, e por isso não vai para `.claude/`.
+   - Se **não**, não crie a pasta agora. O comando `/claude:plano` continua
+     disponível e, se usado manualmente depois, cria a pasta e ativa o
+     comportamento automático a partir daí.
+
+7. **Relatar.** Mostre ao usuário:
    - O caminho do projeto criado.
    - Confirmação de que é um repo git novo (sem o histórico do template).
    - **Próximos passos por template:**
      - **lite:** preencher os `{{placeholders}}` em `CLAUDE.md`
        ("Project-specific notes"). Comandos disponíveis: `/claude:learning`,
-       `/claude:manual-verify`, `/claude:pesquisa`.
+       `/claude:manual-verify`, `/claude:pesquisa`, `/claude:plano`.
      - **full:** preencher os `{{placeholders}}` em `ai-docs/PRD.md` e em
        `CLAUDE.md`; depois `/claude:create-tasks` → `/claude:dev`. Lembrar de curar
        `.claude/skills/` e `ai-docs/tools.yaml`.
@@ -150,6 +178,9 @@ seu próprio repositório limpo).
      (`~/.claude/skills/pesquisa-workflow/`) para o registro automático
      funcionar — sem ela, só o comando `/claude:pesquisa` (rodado à mão)
      funciona.
+   - Se o plano em blocos foi habilitado no passo 6, avise o mesmo sobre a
+     skill `plano-em-blocos` (`~/.claude/skills/plano-em-blocos/`), e que a
+     primeira leitura de `/usage` é pedida no começo do primeiro bloco.
 
 ## Regras
 
@@ -161,7 +192,12 @@ seu próprio repositório limpo).
 - As skills e MCPs do usuário são **globais** (`~/.claude/`), então o projeto
   novo já nasce com elas — inclusive a skill `git-workflow`, que já cobre
   branch por tarefa e commit por tarefa concluída por padrão. O hook do
-  passo 4 e a pasta `pesquisa/` do passo 5 são extras opt-in por projeto.
+  passo 4, a pasta `pesquisa/` do passo 5 e a pasta `ai-docs/plano/` do
+  passo 6 são extras opt-in por projeto.
+- **Nada de conteúdo de projeto vai para `.claude/`.** Ali moram comandos,
+  skills, scripts e settings — *como* eu trabalho. O que eu produzo **sobre**
+  o trabalho (lições, plano, medições) vai para `ai-docs/`; o produto e suas
+  fontes (código, especificação, `pesquisa/`) ficam na raiz.
 - `.claude/scripts/arvore-de-commits.sh`/`.ps1` vêm bundlados em ambos os
   templates e sempre disponíveis, independente do que foi respondido no
   passo 4 — só o hook automático (que os chama a cada resposta) é opt-in.

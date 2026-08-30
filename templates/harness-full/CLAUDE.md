@@ -18,6 +18,7 @@ Minimal Claude Code template with a task-driven workflow:
 | `/claude:manual-verify [request]` | Runs a free-form verification you describe — browser checks via Playwright MCP, CLI checks, etc. — and reports anything that needs human action. |
 | `/claude:pesquisa [topic]` | Researches a topic and records a structured note in `pesquisa/<slug>.md` (creates the folder + index on first run). |
 | `/claude:atualizar-notas [hint]` | Detects stack/backend/package manager/commands/conventions from the repo and syncs the "Project-specific notes" section below. |
+| `/claude:plano [o que construir]` | Plans long work in **measured blocks** in `ai-docs/plano/`: cuts the work into blocks that end green, groups them into session windows by shared context, and tracks the session budget (creates the folder on first run). |
 
 > **Convenção de comandos:** todos os comandos do usuário usam o namespace
 > `claude:` — ficam em `.claude/commands/claude/<nome>.md` e são chamados como

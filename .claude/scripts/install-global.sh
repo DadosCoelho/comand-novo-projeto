@@ -14,8 +14,8 @@ FORCE=0
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 CLAUDE_HOME="$HOME/.claude"
 
-SKILLS=(git-workflow pesquisa-workflow)
-COMMANDS=(novo-projeto.md pesquisa.md)
+SKILLS=(git-workflow pesquisa-workflow plano-em-blocos)
+COMMANDS=(novo-projeto.md pesquisa.md plano.md)
 
 echo "Instalando globalmente a partir de: $REPO_ROOT"
 echo "Destino (~/.claude): $CLAUDE_HOME"
