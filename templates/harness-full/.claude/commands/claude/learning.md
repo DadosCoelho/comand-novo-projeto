@@ -22,15 +22,16 @@ You need:
 - **Context:** what was being done (task, file, feature).
 - **What went wrong:** description of the problem/error.
 - **Root cause:** why it happened (not just the symptom).
-- **How to avoid:** an actionable rule for the future.
+- **How to avoid:** an actionable rule for the future, phrased as "Next time [situation], I will [action]."
+- **Signal:** the observable that tells you this pattern is active again (an error message, a symptom, a kind of task). Without it the lesson is recorded but never recalled.
 - **Tags:** 1-5 keywords in kebab-case (e.g., `auth`, `convex-validators`, `tailwind-dark`).
 
 If `$ARGUMENTS` was provided, extract those fields from the text. If anything is missing, **ask the user** before writing.
 
 ### Step 2: Add the entry
 
-1. Read `ai-docs/lessons.md`.
-2. Create the file if it doesn't exist (use the standard template header).
+1. Read `ai-docs/lessons.md` and search it for the **root cause** (not the symptom). Same root cause with a different symptom → add the new symptom to that entry as another example instead of creating a new one. Only a new root cause gets a new entry.
+2. If the file doesn't exist, create it (use the standard template header).
 3. Add the new lesson **above the existing lessons** (most recent first), right after the comment `<!-- New lessons will be added below this comment by the /claude:learning command -->`.
 
 ### Format of each entry
@@ -41,7 +42,8 @@ If `$ARGUMENTS` was provided, extract those fields from the text. If anything is
 - **Context:** [what was being done]
 - **What went wrong:** [problem description]
 - **Root cause:** [why it happened]
-- **How to avoid:** [actionable rule for the future]
+- **How to avoid:** Next time [situation], I will [action].
+- **Signal:** [what you will see when this is about to happen again]
 - **Tags:** `tag1`, `tag2`, `tag3`
 
 ---

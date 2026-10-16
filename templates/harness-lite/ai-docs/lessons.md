@@ -15,6 +15,7 @@ Each lesson follows the format:
 - **What went wrong:** clear description of the problem.
 - **Root cause:** why it happened.
 - **How to avoid:** an actionable rule for future tasks.
+- **Signal:** what you will see when the same root cause is about to strike again.
 - **Tags:** keywords for fast search (e.g., `auth`, `forms`, `database`, `styling`).
 
 ---
