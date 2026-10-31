@@ -89,6 +89,10 @@ ai-docs/
 ### Project-specific notes
 - The fields in "Project-specific notes" below start as `{{placeholders}}` because nothing exists yet when the template is adopted. The moment one becomes decidable (stack chosen, first working run command, a convention that settles) or drifts from what's on disk (e.g. package manager switched), update it yourself — don't wait to be asked. Run `/claude:atualizar-notas` to do this on demand instead of inline.
 
+### Instruction files
+- **Keep this file to rules.** Each item here changes what Claude does. How something was built, discarded options, measurements → `ai-docs/<topic>.md`. Rules for one area of the code → `.claude/rules/<topic>.md` with `paths:`. Leave a one-line pointer under "Where details live" (plain path, never `@path` — that imports the whole file into every session).
+- **Irreversible commands get an `ask` rule.** When the project gains a command that deploys, migrates, or writes to production, add it to `permissions.ask` in `.claude/settings.json` — both `Bash(<cmd> *)` and `PowerShell(<cmd> *)` — and list it under "Irreversible commands". Text in this file is context, not a lock.
+
 ### RTK
 - Only applies if this project has a `.rtk/config.toml` — its presence means the RTK hook is enabled here, compressing command output before it reaches the context. That is pure gain for `git log` or `tsc`, and a loss when the output **is** the product. The moment a command's output becomes something read for its data (a measurement script, a query, a benchmark — anything whose numbers drive a decision), add it to `exclude_commands` yourself, without waiting to be asked. Exclusion matches by prefix, subcommand included: `"pnpm bench"` leaves `pnpm list` compressed. Like the notes above, this is a living doc: what to exclude is not knowable at scaffold time, it emerges. If this project also uses `ai-docs/plano/`, note the date of any change there — RTK moves the budget ruler's denominator, and `medicoes.py` cannot see it.
 
@@ -148,3 +152,7 @@ For gitignored files you want copied into new worktrees (like `.env.local`), add
   `hooks:` in `ai-docs/tools.yaml`.
 - **Conventions:** {{folder layout, naming, validation library, auth pattern,
   i18n — anything the agents should never have to rediscover}}
+- **Irreversible commands:** {{deploy, migrations, scripts that write to
+  production — each one has an `ask` rule in `.claude/settings.json`}}
+- **Where details live:** {{one line per `.claude/rules/<topic>.md` and
+  `ai-docs/<topic>.md` — topic and path}}

@@ -50,6 +50,16 @@ These are the defaults every change should follow:
   a new convention settles). Treat the section as a living doc you maintain
   as you go, not a form the user fills in upfront. Run
   `/claude:atualizar-notas` to do this on demand instead of inline.
+- **Keep this file to rules.** Each item here changes what Claude does. How
+  something was built, discarded options, measurements → `ai-docs/<topic>.md`.
+  Rules for one area of the code → `.claude/rules/<topic>.md` with `paths:`.
+  Leave a one-line pointer under "Where details live" (plain path, never
+  `@path` — that imports the whole file into every session).
+- **Irreversible commands get an `ask` rule.** When the project gains a
+  command that deploys, migrates, or writes to production, add it to
+  `permissions.ask` in `.claude/settings.json` — both `Bash(<cmd> *)` and
+  `PowerShell(<cmd> *)` — and list it under "Irreversible commands". Text in
+  this file is context, not a lock.
 - **Keep `.rtk/config.toml` current** — only if this project has one; its
   presence means the RTK hook is enabled here, compressing command output
   before it reaches the context. That is pure gain for `git log` or `tsc`, and
@@ -76,3 +86,7 @@ These are the defaults every change should follow:
 - **Run / build / test:** {{the commands to start, build, and test the app}}
 - **Conventions:** {{folder layout, naming, validation library, auth pattern,
   i18n — anything Claude should never have to rediscover}}
+- **Irreversible commands:** {{deploy, migrations, scripts that write to
+  production — each one has an `ask` rule in `.claude/settings.json`}}
+- **Where details live:** {{one line per `.claude/rules/<topic>.md` and
+  `ai-docs/<topic>.md` — topic and path}}

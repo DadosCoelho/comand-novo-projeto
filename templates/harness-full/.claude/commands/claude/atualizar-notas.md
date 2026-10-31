@@ -27,8 +27,9 @@ explicitamente.
 ### Passo 1: Localizar a seção
 
 Leia o `CLAUDE.md` na raiz do projeto e encontre `## Project-specific
-notes` (5 campos: Stack, Backend/database, Package manager, Run/build/test,
-Conventions). Se o arquivo ou a seção não existir, **pare** e avise — este
+notes` (Stack, Backend/database, Package manager, Run/build/test,
+Conventions, Irreversible commands, Where details live — o template `full`
+não tem Run/build/test). Se o arquivo ou a seção não existir, **pare** e avise — este
 comando só sincroniza uma seção existente, não cria `CLAUDE.md` do zero.
 
 ### Passo 2: Detectar cada campo a partir do repositório
@@ -57,6 +58,16 @@ Investigue o projeto de verdade — não chute:
   biblioteca de i18n, estilo de nomenclatura observado em múltiplos
   arquivos. Só escreva o que for observável em **2 ou mais lugares** — um
   arquivo isolado ainda não é uma convenção.
+- **Irreversible commands**: scripts de deploy/publicação/migração/escrita
+  em produção (`scripts` do `package.json`, alvos de `Makefile`, `*.bat`/
+  `*.ps1`/`*.sh` com nomes como `deploy`, `publish`, `migrate`). Para cada
+  um, confira se `.claude/settings.json` tem `permissions.ask` com
+  `Bash(<cmd> *)` **e** `PowerShell(<cmd> *)`. Faltando, **não** edite o
+  settings (este comando só mexe nas notas): liste no relatório e proponha
+  a regra.
+- **Where details live**: um item por arquivo em `.claude/rules/*.md` e
+  `ai-docs/*.md` (fora `lessons.md`, `PRD.md`, `tools.yaml` e as pastas
+  `plano/`, `todos/`, `actual-todo/`) — tema e caminho, sem `@`.
 
 Se `$ARGUMENTS` foi passado, use como pista para campos que a detecção
 sozinha deixou ambíguos — confirme contra o repositório (ex.: se o usuário
@@ -65,7 +76,7 @@ confiar cegamente na dica).
 
 ### Passo 3: Mesclar sem atropelar
 
-Para cada um dos 5 campos:
+Para cada campo:
 
 - Ainda é `{{placeholder}}` e algo foi detectado → preencha.
 - Já está preenchido com conteúdo real **e** ainda bate com o que está no
