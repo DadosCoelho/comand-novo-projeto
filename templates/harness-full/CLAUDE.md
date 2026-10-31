@@ -150,6 +150,7 @@ For gitignored files you want copied into new worktrees (like `.env.local`), add
   project to one PM, add a `PreToolUse(Bash)` hook in
   `.claude/settings.json` that blocks the others, and catalog it under
   `hooks:` in `ai-docs/tools.yaml`.
+- **Run / build / test:** {{the commands to start, build, and test the app}}
 - **Conventions:** {{folder layout, naming, validation library, auth pattern,
   i18n — anything the agents should never have to rediscover}}
 - **Irreversible commands:** {{deploy, migrations, scripts that write to

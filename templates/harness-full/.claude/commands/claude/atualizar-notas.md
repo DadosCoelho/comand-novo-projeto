@@ -28,8 +28,7 @@ explicitamente.
 
 Leia o `CLAUDE.md` na raiz do projeto e encontre `## Project-specific
 notes` (Stack, Backend/database, Package manager, Run/build/test,
-Conventions, Irreversible commands, Where details live — o template `full`
-não tem Run/build/test). Se o arquivo ou a seção não existir, **pare** e avise — este
+Conventions, Irreversible commands, Where details live). Se o arquivo ou a seção não existir, **pare** e avise — este
 comando só sincroniza uma seção existente, não cria `CLAUDE.md` do zero.
 
 ### Passo 2: Detectar cada campo a partir do repositório
